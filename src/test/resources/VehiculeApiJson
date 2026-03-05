@@ -1,0 +1,44 @@
+###POST
+
+/api/v1/vehicules/garages/1
+
+
+
+{
+  "modele": "TOYOTA",
+  "anneeFabrication": 2021,
+  "typeCarburant": "HYBRIDE",
+  "matricule": "AA-123-BB"
+}
+
+/api/v1/vehicules/garages/2
+
+{
+  "modele": "RENAULT",
+  "anneeFabrication": 2019,
+  "typeCarburant": "DIESEL",
+  "matricule": "BB-456-CC"
+}
+
+##########
+
+###PUT
+
+/api/v1/vehicules/1
+
+{
+  "modele": "PEUGEOT",
+  "anneeFabrication": 2022,
+  "typeCarburant": "ESSENCE",
+  "matricule": "AA-123-BB"
+}
+
+/api/v1/vehicules/2
+
+{
+  "modele": "TOYOTA",
+  "anneeFabrication": 2023,
+  "typeCarburant": "ELECTRIQUE",
+  "matricule": "BB-456-CC"
+}
+

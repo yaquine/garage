@@ -1,0 +1,48 @@
+###POST
+
+/api/v1/accessoires/vehicules/1
+
+
+
+{
+  "nom": "Camera de recul",
+  "description": "Camera arrière haute résolution pour faciliter le stationnement",
+  "prix": 850.50,
+  "type": "SECURITE",
+  "code": "ACC-CAM-001"
+}
+
+POST /api/v1/accessoires/vehicules/2
+
+{
+  "nom": "GPS intégré",
+  "description": "Système de navigation GPS avec écran tactile",
+  "prix": 1500.00,
+  "type": "CONFORT",
+  "code": "ACC-GPS-002"
+}
+
+##########
+
+###PUT
+
+/api/v1/accessoires/1
+
+{
+  "nom": "Camera de recul HD",
+  "description": "Camera arrière HD avec vision nocturne",
+  "prix": 950.00,
+  "type": "SECURITE",
+  "code": "ACC-CAM-001"
+}
+
+/api/v1/accessoires/2
+
+{
+  "nom": "GPS Premium",
+  "description": "Système GPS premium avec trafic en temps réel",
+  "prix": 1800.75,
+  "type": "CONFORT",
+  "code": "ACC-GPS-002"
+}
+

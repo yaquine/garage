@@ -1,0 +1,171 @@
+-- creation
+
+POST /api/v1/garages
+
+{
+  "nom": "Garage AutoPlus",
+  "addresse": "Boulevard Zerktouni, Casablanca",
+  "telephone": "0600000000",
+  "email": "contact@autoplus.ma",
+  "horaireOuverturesMap": {
+    "MONDAY": [
+      {
+        "tempsDebut": "08:00",
+        "tempsFin": "12:00"
+      },
+      {
+        "tempsDebut": "14:00",
+        "tempsFin": "18:00"
+      }
+    ],
+    "TUESDAY": [
+      {
+        "tempsDebut": "08:00",
+        "tempsFin": "18:00"
+      }
+    ]
+  }
+}
+
+{
+
+  "nom": "Garage Elite Motors",
+  "addresse": "Avenue Hassan II, Rabat",
+  "telephone": "0655443322",
+  "email": "contact@elitemotors.ma",
+  "horaireOuverturesMap": {
+    "MONDAY": [
+      {
+        "tempsDebut": "08:30",
+        "tempsFin": "12:30"
+      },
+      {
+        "tempsDebut": "13:30",
+        "tempsFin": "18:30"
+      }
+    ],
+    "WEDNESDAY": [
+      {
+        "tempsDebut": "09:00",
+        "tempsFin": "17:00"
+      }
+    ],
+    "FRIDAY": [
+      {
+        "tempsDebut": "08:00",
+        "tempsFin": "16:00"
+      }
+    ]
+  }
+}
+
+{
+  "nom": "Garage Rapid Service",
+  "addresse": "Zone Industrielle Ain Sebaa, Casablanca",
+  "telephone": "0677889900",
+  "email": "support@rapidservice.ma",
+  "horaireOuverturesMap": {
+    "TUESDAY": [
+      {
+        "tempsDebut": "07:30",
+        "tempsFin": "15:30"
+      }
+    ],
+    "THURSDAY": [
+      {
+        "tempsDebut": "08:00",
+        "tempsFin": "18:00"
+      }
+    ],
+    "SATURDAY": [
+      {
+        "tempsDebut": "09:00",
+        "tempsFin": "13:00"
+      }
+    ]
+  }
+}
+
+PUT /api/v1/garages/1
+
+
+{
+  "nom": "Garage AutoPlus Premium1",
+  "addresse": "Boulevard Zerktouni, Casablanca1",
+  "telephone": "0611111111",
+  "email": "contact@autoplus.ma",
+  "horaireOuverturesMap": {
+    "MONDAY": [
+      {
+        "tempsDebut": "09:00",
+        "tempsFin": "17:00"
+      }
+    ]
+  }
+}
+
+
+{
+  "nom": "Garage Elite Motors Premium",
+  "addresse": "Avenue Hassan II, Rabat - Centre Ville",
+  "telephone": "0655443322",
+  "email": "premium@elitemotors.ma",
+  "horaireOuverturesMap": {
+    "MONDAY": [
+      {
+        "tempsDebut": "09:00",
+        "tempsFin": "13:00"
+      },
+      {
+        "tempsDebut": "14:00",
+        "tempsFin": "19:00"
+      }
+    ],
+    "THURSDAY": [
+      {
+        "tempsDebut": "09:00",
+        "tempsFin": "17:30"
+      }
+    ]
+  }
+}
+
+
+{
+  "nom": "Garage Rapid Service Pro",
+  "addresse": "Zone Industrielle Ain Sebaa Bloc C, Casablanca",
+  "telephone": "0677001122",
+  "email": "contact@rapidservice.ma",
+  "horaireOuverturesMap": {
+    "TUESDAY": [
+      {
+        "tempsDebut": "08:00",
+        "tempsFin": "16:00"
+      }
+    ],
+    "FRIDAY": [
+      {
+        "tempsDebut": "08:30",
+        "tempsFin": "15:30"
+      }
+    ],
+    "SATURDAY": [
+      {
+        "tempsDebut": "09:00",
+        "tempsFin": "14:00"
+      }
+    ]
+  }
+}
+
+PUT /api/v1/garages/1/disactiver
+
+
+--Pagination:
+
+POST /api/v1/garages/chercher?page=0&size=5&sort=nom,asc
+
+{
+  "nom": "auto",
+  "addresse": "casa"
+}
