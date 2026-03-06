@@ -55,6 +55,10 @@ public class Vehicule extends EntiteAuditAbstraite{
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public ModeleVehicule getModele() {
         return modele;
     }

@@ -31,7 +31,6 @@ public class Accessoire extends EntiteAuditAbstraite{
     @Column(name = "type", nullable = false, length = 150)
     private String type;
 
-
     @Column(name = "code", nullable = false, unique = true, length = 30)
     private String code;
 

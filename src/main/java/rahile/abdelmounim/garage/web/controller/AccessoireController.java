@@ -48,7 +48,7 @@ public class AccessoireController implements AccessoireApi {
     @Override
     public ResponseEntity<AccessoireReponse> modifierAccessoire(Long accessoireId, AccessoireRequete accessoireRequete) {
 
-        LOGGER.info("debut modifierAccessoire id: {}", accessoireId);
+        LOGGER.info("debut modifier Accessoire id: {}", accessoireId);
 
         AccessoireEntreDto dto = AccessoireMapper.transformerEntreDto(accessoireRequete);
 
@@ -56,7 +56,7 @@ public class AccessoireController implements AccessoireApi {
 
         AccessoireReponse response = AccessoireMapper.transformerReponse(sortieDto);
 
-        LOGGER.info("fin modifierAccessoire id: {}", accessoireId);
+        LOGGER.info("fin modifier Accessoire id: {}", accessoireId);
 
         return ResponseEntity.ok(response);
     }
@@ -64,11 +64,11 @@ public class AccessoireController implements AccessoireApi {
     @Override
     public ResponseEntity<Void> supprimerAccessoire(Long accessoireId) {
 
-        LOGGER.info("debut supprimerAccessoire id: {}", accessoireId);
+        LOGGER.info("debut supprimer Accessoire id: {}", accessoireId);
 
         accessoireService.supprimerAccessoire(accessoireId);
 
-        LOGGER.info("fin supprimerAccessoire id: {}", accessoireId);
+        LOGGER.info("fin supprimer Accessoire id: {}", accessoireId);
 
         return ResponseEntity.noContent().build();
     }
@@ -76,7 +76,7 @@ public class AccessoireController implements AccessoireApi {
     @Override
     public ResponseEntity<List<AccessoireReponse>> listerAccessoiresVehicule(Long vehiculeId) {
 
-        LOGGER.info("debut listerAccessoiresVehicule vehiculeId: {}", vehiculeId);
+        LOGGER.info("debut lister Accessoires Vehicule vehiculeId: {}", vehiculeId);
 
         List<AccessoireSortieDto> dtos = accessoireService.listerAccessoiresVehicule(vehiculeId);
 
@@ -85,7 +85,7 @@ public class AccessoireController implements AccessoireApi {
                         .map(AccessoireMapper::transformerReponse)
                         .toList();
 
-        LOGGER.info("fin listerAccessoiresVehicule vehiculeId: {}", vehiculeId);
+        LOGGER.info("fin lister Accessoires Vehicule vehiculeId: {}", vehiculeId);
 
         return ResponseEntity.ok(responses);
     }

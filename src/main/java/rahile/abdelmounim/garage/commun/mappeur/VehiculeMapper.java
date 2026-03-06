@@ -50,14 +50,14 @@ public interface VehiculeMapper {
             return;
         }
         if (dto.modele() != null) {
-            vehicule.setModele(ModeleVehicule.fromValue(dto.modele().trim()) );
+            vehicule.setModele(ModeleVehicule.fromValue(dto.modele().trim()));
         }
         if (dto.anneeFabrication() > 0) {
             vehicule.setAnneeFabrication(Year.of(dto.anneeFabrication()));
-        }if (dto.typeCarburant() != null) {
+        }
+        if (dto.typeCarburant() != null) {
             vehicule.setTypeCarburant(CarburantEnum.fromValue(dto.typeCarburant()));
         }
-
 
         vehicule.setMatricule(dto.matricule());
     }

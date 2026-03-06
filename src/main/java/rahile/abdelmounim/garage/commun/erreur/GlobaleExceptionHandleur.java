@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.OffsetDateTime;
 
@@ -14,7 +13,7 @@ public class GlobaleExceptionHandleur {
 
 
     @ExceptionHandler(GarageInexistantException.class)
-    public ResponseEntity<ApiErrorResponse> handleGarageException(
+    public ResponseEntity<ApiErrorResponse> gererGarageException(
             GarageInexistantException ex) {
 
         ApiErrorResponse error = new ApiErrorResponse(
@@ -29,7 +28,7 @@ public class GlobaleExceptionHandleur {
     }
 
     @ExceptionHandler(VehiculeInexistantException.class)
-    public ResponseEntity<ApiErrorResponse> handleVehiculeException(
+    public ResponseEntity<ApiErrorResponse> gererVehiculeException(
             VehiculeInexistantException ex) {
 
         ApiErrorResponse error = new ApiErrorResponse(
@@ -44,7 +43,7 @@ public class GlobaleExceptionHandleur {
     }
 
     @ExceptionHandler(InvalidEnumException.class)
-    public ResponseEntity<ApiErrorResponse> handleInvalidEnumException(
+    public ResponseEntity<ApiErrorResponse> gererInvalidEnumException(
             InvalidEnumException ex) {
 
         ApiErrorResponse error = new ApiErrorResponse(
@@ -59,7 +58,7 @@ public class GlobaleExceptionHandleur {
     }
 
     @ExceptionHandler(VehiculeCapacitieSurpasseException.class)
-    public ResponseEntity<ApiErrorResponse> handleVehiculeCapacitieSurpasseException(
+    public ResponseEntity<ApiErrorResponse> gererVehiculeCapacitieSurpasseException(
             VehiculeCapacitieSurpasseException ex) {
 
         ApiErrorResponse error = new ApiErrorResponse(
@@ -74,7 +73,7 @@ public class GlobaleExceptionHandleur {
     }
 
     @ExceptionHandler(DataAccessException.class)
-    public ResponseEntity<ApiErrorResponse> handleGenericException(DataAccessException ex) {
+    public ResponseEntity<ApiErrorResponse> gererGenericException(DataAccessException ex) {
 
         ApiErrorResponse error = new ApiErrorResponse(
                 "INTERNAL_ERROR",
@@ -94,16 +93,13 @@ public class GlobaleExceptionHandleur {
             return HttpStatus.NOT_FOUND;
         }
 
-
-        if (ex instanceof BusinessException ||
+        if (
                 ex instanceof InvalidEnumException ||
-                ex instanceof VehiculeCapacitieSurpasseException
+                        ex instanceof VehiculeCapacitieSurpasseException
         ) {
-
 
             return HttpStatus.BAD_REQUEST;
         }
-
 
         return HttpStatus.BAD_REQUEST;
     }

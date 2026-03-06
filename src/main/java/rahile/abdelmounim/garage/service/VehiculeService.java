@@ -8,16 +8,15 @@ import java.util.List;
 public interface VehiculeService {
 
 
+    VehiculeSortieDto ajouterVehicule(Long garageId, VehiculeEntreDto dto);
 
-        VehiculeSortieDto ajouterVehicule(Long garageId, VehiculeEntreDto dto);
+    VehiculeSortieDto modifierVehicule(Long vehiculeId, VehiculeEntreDto dto);
 
-        VehiculeSortieDto modifierVehicule(Long vehiculeId, VehiculeEntreDto dto);
+    void supprimerVehicule(Long vehiculeId);
 
-        void supprimerVehicule(Long vehiculeId);
+    List<VehiculeSortieDto> listerVehiculesGarage(Long garageId);
 
-        List<VehiculeSortieDto> listerVehiculesGarage(Long garageId);
-
-        List<VehiculeSortieDto> listerVehiculesParModele(String modele);
+    List<VehiculeSortieDto> listerVehiculesParModele(String modele);
 
 
 }

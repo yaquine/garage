@@ -23,8 +23,6 @@ public class HoraireOuverture {
     @Column(name = "temps_fin", nullable = false)
     private LocalTime tempsFin;
 
-
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "garage_id", nullable = false)
     private Garage garage;

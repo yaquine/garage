@@ -33,12 +33,14 @@ public class GarageServiceImpl implements GarageService {
     @Override
     @Transactional
     public GarageSortieDto ajouterGarage(GarageEntreDto garageEntreDto) {
-        LOGGER.info(" debut ajouterGarage");
+
+        LOGGER.info(" debut ajouter Garage");
 
         Garage garage = GarageMapper.transformerEntite(garageEntreDto);
+
         garage = garageRepository.saveAndFlush(garage);
 
-        LOGGER.info(" fin ajouterGarage");
+        LOGGER.info(" fin ajouter Garage");
 
         return GarageMapper.transformerSortieDto(garage);
     }
@@ -78,11 +80,15 @@ public class GarageServiceImpl implements GarageService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public GarageSortieDto trouverGarageParId(Long id) {
-        LOGGER.info("debut trouverGarageParId {}", id);
+
+        LOGGER.info("debut trouver Garage Par Id {}", id);
 
         Garage garage = garageRepository.findByIdAndEtat(id, EntiteAuditAbstraite.EtatEntiteEnum.ACTIVE)
                 .orElseThrow(() -> new GarageInexistantException( id));
+
+        LOGGER.info("fin trouver Garage Par Id {}", id);
 
         return GarageMapper.transformerSortieDto(garage);
     }
@@ -94,14 +100,14 @@ public class GarageServiceImpl implements GarageService {
             Pageable pageable
     ) {
 
-        LOGGER.info("debut chercherGarages");
+        LOGGER.info("debut chercher Garages");
 
         Specification<Garage> specification =
                 new GarageSpecification(garageReadRequete);
 
         Page<Garage> page = garageRepository.findAll(specification, pageable);
 
-        LOGGER.info("fin chercherGarages");
+        LOGGER.info("fin chercher Garages");
 
         return page.map(GarageMapper::transformerSortieDto);
     }

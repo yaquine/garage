@@ -23,7 +23,6 @@ import java.util.Optional;
 @EnableJpaAuditing(auditorAwareRef = "auditorProvider", dateTimeProviderRef = "auditingDateTimeProvider")
 public class PersistenceConfiguration {
 
-
     @Bean
     AuditorAware<String> auditorProvider() {
         return new AuditorAwareImpl();

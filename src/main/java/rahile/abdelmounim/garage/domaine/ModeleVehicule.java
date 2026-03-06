@@ -5,7 +5,9 @@ import rahile.abdelmounim.garage.commun.erreur.InvalidEnumException;
 
 public enum ModeleVehicule {
 
-    RENAULT("RENAULT"), PEUGEOT("PEUGEOT"),TOYOTA("TOYOTA");
+    RENAULT("RENAULT"),
+    PEUGEOT("PEUGEOT"),
+    TOYOTA("TOYOTA");
 
     private final String value;
 
@@ -28,6 +30,5 @@ public enum ModeleVehicule {
         throw new InvalidEnumException("MODELE_VEHICULE") {
         };
     }
-
-
+    
 }

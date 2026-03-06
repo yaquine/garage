@@ -42,7 +42,7 @@ public class VehiculeServiceImpl implements VehiculeService {
     @Override
     public VehiculeSortieDto ajouterVehicule(Long garageId, VehiculeEntreDto vehiculeEntreDto) {
 
-        LOGGER.info(" debut ajoutervehicule: {}, garage : {}", vehiculeEntreDto, garageId);
+        LOGGER.info(" debut ajouter vehicule: {}, garage : {}", vehiculeEntreDto, garageId);
 
         Garage garage = garageRepository.findByIdAndEtat(garageId, EntiteAuditAbstraite.EtatEntiteEnum.ACTIVE)
                 .orElseThrow(() -> new GarageInexistantException(garageId));
@@ -55,7 +55,7 @@ public class VehiculeServiceImpl implements VehiculeService {
 
         eventPublisher.publishEvent(new VehiculeAjouteEvent(vehicule.getId(), garageId));
 
-        LOGGER.info(" fin ajoutervehicule: {} ", vehicule);
+        LOGGER.info(" fin ajouter vehicule: {} ", vehicule);
 
 
         return VehiculeMapper.transformerDto(vehicule);
@@ -64,14 +64,14 @@ public class VehiculeServiceImpl implements VehiculeService {
     @Override
     public VehiculeSortieDto modifierVehicule(Long vehiculeId, VehiculeEntreDto dto) {
 
-        LOGGER.info(" debut modifierVehicule: {}", vehiculeId);
+        LOGGER.info(" debut modifier Vehicule: {}", vehiculeId);
 
         Vehicule vehicule = vehiculeRepository.findByIdAndEtat(vehiculeId, EntiteAuditAbstraite.EtatEntiteEnum.ACTIVE)
                 .orElseThrow(() -> new VehiculeInexistantException(vehiculeId));
 
         VehiculeMapper.mettreAJourEntity(vehicule, dto);
 
-        LOGGER.info(" fin modifierVehicule: {} ", vehiculeId);
+        LOGGER.info(" fin modifier Vehicule: {} ", vehiculeId);
 
         return VehiculeMapper.transformerDto(vehicule);
     }
@@ -79,7 +79,7 @@ public class VehiculeServiceImpl implements VehiculeService {
     @Override
     public void supprimerVehicule(Long vehiculeId) {
 
-        LOGGER.info(" debut supprimerVehicule: {}", vehiculeId);
+        LOGGER.info(" debut supprimer Vehicule: {}", vehiculeId);
 
         Vehicule vehicule = vehiculeRepository.findByIdAndEtat(vehiculeId, EntiteAuditAbstraite.EtatEntiteEnum.ACTIVE)
                 .orElseThrow(() -> new VehiculeInexistantException(vehiculeId));
@@ -98,10 +98,10 @@ public class VehiculeServiceImpl implements VehiculeService {
     @Transactional(readOnly = true)
     public List<VehiculeSortieDto> listerVehiculesGarage(Long garageId) {
 
-        LOGGER.info(" debut listerVehiculesGarage pour le garage: {}", garageId);
+        LOGGER.info(" debut lister Vehicules Garage pour le garage: {}", garageId);
 
 
-        return vehiculeRepository.findByGarageIdAndEtat(garageId, EntiteAuditAbstraite.EtatEntiteEnum.ACTIVE )
+        return vehiculeRepository.findByGarageIdAndEtat(garageId, EntiteAuditAbstraite.EtatEntiteEnum.ACTIVE)
                 .stream()
                 .map(VehiculeMapper::transformerDto)
                 .toList();

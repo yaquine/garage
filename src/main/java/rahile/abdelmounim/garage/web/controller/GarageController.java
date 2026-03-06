@@ -33,27 +33,41 @@ public class GarageController implements GarageApi {
 
     @Override
     public ResponseEntity<GarageReponse> ajouterGarage(GarageRequete garageRequete) {
-        LOGGER.info(" debut ajouterGarage: {}", garageRequete);
+
+        LOGGER.info(" debut ajouter Garage: {}", garageRequete);
+
         GarageEntreDto garageEntreDto = GarageMapper.transformerDto(garageRequete);
+
         GarageSortieDto garageSortieDto  = garageService.ajouterGarage(garageEntreDto);
-        LOGGER.info(" fin ajouterGarage: {}", garageSortieDto);
+
+        LOGGER.info(" fin ajouter Garage: {}", garageSortieDto);
+
         return new ResponseEntity<>(GarageMapper.transformerReponse(garageSortieDto), HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<GarageReponse> modifierGarage(Long id, GarageRequete garageRequete) {
+
         LOGGER.info(" debut modifierGarage: {}", garageRequete);
+
         GarageEntreDto garageEntreDto = GarageMapper.transformerDto(garageRequete);
+
         GarageSortieDto garageSortieDto  = garageService.modifierGarage(id, garageEntreDto);
+
         LOGGER.info(" fin modifierGarage: {}", garageRequete);
+
         return new ResponseEntity<>(GarageMapper.transformerReponse(garageSortieDto), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Void> supprimerGarage(Long id) {
+
         LOGGER.info(" debut supprimer Garage: {}", id);
+
         garageService.supprimerGarage(id);
+
         LOGGER.info(" fin supprimer Garage: ");
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -72,10 +86,14 @@ public class GarageController implements GarageApi {
 
     @Override
     public ResponseEntity<PageResponse<GarageReponse>> chercherGarages(GarageReadRequete garageReadRequete, Pageable pageable) {
+
+        LOGGER.info("debut chercher Garages {} ", garageReadRequete);
+
         Page<GarageReponse> page =
                 garageService.chercherGarages(garageReadRequete, pageable)
                         .map(GarageMapper::transformerReponse);
 
+        LOGGER.info("fin chercher Garages {} ", garageReadRequete);
 
         return ResponseEntity.ok(GarageMapper.transformerReponse(page));
     }

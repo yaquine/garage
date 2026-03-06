@@ -8,7 +8,6 @@ import rahile.abdelmounim.garage.domaine.EntiteAuditAbstraite;
 import rahile.abdelmounim.garage.domaine.Garage;
 import rahile.abdelmounim.garage.domaine.Vehicule;
 import rahile.abdelmounim.garage.web.requete.GarageReadRequete;
-
 import jakarta.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,15 +21,12 @@ public class GarageSpecification implements Specification<Garage> {
     }
 
     @Override
-    public @Nullable Predicate toPredicate(
-            Root<Garage> root,
-            CriteriaQuery<?> query,
-            CriteriaBuilder cb
-    ) {
+    public @Nullable Predicate toPredicate(Root<Garage> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 
         List<Predicate> predicates = new ArrayList<>();
 
         if (garageReadRequete.nom() != null && !garageReadRequete.nom().isBlank()) {
+
             predicates.add(
                     cb.like(
                             cb.lower(root.get("nom")),
@@ -39,7 +35,8 @@ public class GarageSpecification implements Specification<Garage> {
             );
         }
 
-        if (garageReadRequete.addresse() != null  && !garageReadRequete.addresse().isBlank()) {
+        if (garageReadRequete.addresse() != null && !garageReadRequete.addresse().isBlank()) {
+
             predicates.add(
                     cb.like(
                             cb.lower(root.get("addresse")),
@@ -65,7 +62,9 @@ public class GarageSpecification implements Specification<Garage> {
         if (garageReadRequete.typeAccessoire() != null) {
 
             if (vehiculeJoin == null) {
+
                 vehiculeJoin = root.join("vehicules", JoinType.INNER);
+
             }
 
             Join<Vehicule, Accessoire> accessoireJoin =

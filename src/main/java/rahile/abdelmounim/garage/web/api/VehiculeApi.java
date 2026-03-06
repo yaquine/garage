@@ -8,7 +8,7 @@ import rahile.abdelmounim.garage.web.requete.VehiculeRequete;
 
 import java.util.List;
 
-@Tag(name = "Vehicule EndPoint", description = "Gestion des vehicules")
+@Tag(name = "Vehicule", description = "Gestion des vehicules")
 @RequestMapping("/api/v1/vehicules")
 public interface VehiculeApi {
 

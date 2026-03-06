@@ -12,7 +12,6 @@ public interface AccessoireRepository extends JpaRepository<Accessoire, Long> {
 
     List<Accessoire> findByVehiculeIdAndEtat(Long vehiculeId, EntiteAuditAbstraite.EtatEntiteEnum etat);
 
-
     Optional<Accessoire> findByIdAndEtat(Long id, EntiteAuditAbstraite.EtatEntiteEnum etat);
 
 }

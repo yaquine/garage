@@ -37,9 +37,6 @@ public class Garage extends EntiteAuditAbstraite{
     private Set<Vehicule> vehicules = new HashSet<>();
 
 
-
-
-
     public Garage() {
     }
 
@@ -110,7 +107,7 @@ public class Garage extends EntiteAuditAbstraite{
             throw new VehiculeCapacitieSurpasseException(id);
         }
         vehicule.setGarage(this);
-        vehicules.add(vehicule); // Set ensures uniqueness
+        vehicules.add(vehicule);
     }
 
     public void supprimerVehicule(Vehicule vehicule) {
@@ -134,6 +131,4 @@ public class Garage extends EntiteAuditAbstraite{
                 "nom='" + nom + '\'' +
                 '}';
     }
-
-    // what is the hek of using Text
 }

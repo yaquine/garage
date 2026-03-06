@@ -25,9 +25,7 @@ public interface AccessoireMapper {
         );
     }
 
-    static Accessoire transformerEntite(
-            AccessoireEntreDto dto
-    ) {
+    static Accessoire transformerEntite(AccessoireEntreDto dto) {
 
         if (dto == null) {
             return null;
@@ -44,9 +42,7 @@ public interface AccessoireMapper {
         return accessoire;
     }
 
-    static AccessoireSortieDto transformerSortieDto(
-            Accessoire accessoire
-    ) {
+    static AccessoireSortieDto transformerSortieDto(Accessoire accessoire) {
 
         if (accessoire == null) {
             return null;
@@ -65,9 +61,7 @@ public interface AccessoireMapper {
         );
     }
 
-    static AccessoireReponse transformerReponse(
-            AccessoireSortieDto dto
-    ) {
+    static AccessoireReponse transformerReponse(AccessoireSortieDto dto) {
 
         if (dto == null) {
             return null;

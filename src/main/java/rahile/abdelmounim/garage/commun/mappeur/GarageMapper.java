@@ -66,9 +66,9 @@ public interface GarageMapper {
                 garageSortieDto.addresse(),
                 garageSortieDto.telephone(),
                 garageSortieDto.email(),
-        transformerHoraireMapRequete(
-                (garageSortieDto.horaireOuverturesMap())
-        ));
+                transformerHoraireMapRequete(
+                        (garageSortieDto.horaireOuverturesMap())
+                ));
     }
 
     static PageResponse<GarageReponse> transformerReponse(Page<GarageReponse> garageReponsePage) {
@@ -177,10 +177,9 @@ public interface GarageMapper {
     }
 
 
-
     private static HoraireOuvertureDto transformerHoraireOuverture(HoraireOuvertureRequete horaireOuvertureRequete) {
 
-        HoraireOuvertureDto embeddable = new HoraireOuvertureDto( LocalTime.parse(horaireOuvertureRequete.tempsDebut()),
+        HoraireOuvertureDto embeddable = new HoraireOuvertureDto(LocalTime.parse(horaireOuvertureRequete.tempsDebut()),
                 LocalTime.parse(horaireOuvertureRequete.tempsFin()));
 
         return embeddable;
@@ -204,7 +203,6 @@ public interface GarageMapper {
     }
 
 
-
     private static Set<HoraireOuverture> transformerHoraireSet(
             Set<HoraireOuvertureDto> source,
             DayOfWeek jour
@@ -219,10 +217,7 @@ public interface GarageMapper {
                 .collect(Collectors.toSet());
     }
 
-    private static HoraireOuverture transformerHoraire(
-            HoraireOuvertureDto dto,
-            DayOfWeek jour
-    ) {
+    private static HoraireOuverture transformerHoraire(HoraireOuvertureDto dto, DayOfWeek jour) {
 
         if (dto == null) {
             return null;
@@ -238,23 +233,6 @@ public interface GarageMapper {
 
         return entity;
     }
-
-
-
-    private static HoraireOuverture transformerHoraireOuverture(HoraireOuvertureDto dto) {
-
-        if (dto == null) {
-            return null;
-        }
-
-        HoraireOuverture entity = new HoraireOuverture();
-
-        entity.setTempsDebut(dto.tempsDebut());
-        entity.setTempsFin(dto.tempsFin());
-
-        return entity;
-    }
-
 
     private static Map<DayOfWeek, Set<HoraireOuvertureRequete>> transformerHoraireMapRequete(
             Map<DayOfWeek, Set<HoraireOuvertureDto>> source

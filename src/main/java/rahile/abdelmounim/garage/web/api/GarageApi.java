@@ -12,7 +12,7 @@ import rahile.abdelmounim.garage.web.reponse.PageResponse;
 import rahile.abdelmounim.garage.web.requete.GarageReadRequete;
 import rahile.abdelmounim.garage.web.requete.GarageRequete;
 
-@Tag(name = "Garage EndPoint", description = "EndPoints pour gestions des garages")
+@Tag(name = "Garage", description = "EndPoints pour gestions des garages")
 @RequestMapping("/api/v1/garages")
 public interface GarageApi {
 

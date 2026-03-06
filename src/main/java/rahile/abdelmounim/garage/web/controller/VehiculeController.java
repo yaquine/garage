@@ -33,7 +33,7 @@ public class VehiculeController implements VehiculeApi {
             VehiculeRequete vehiculeRequete
     ) {
 
-        LOGGER.info(" debut ajoutervehicule: {}, garage : {}", vehiculeRequete, garageId);
+        LOGGER.info(" debut ajouter vehicule: {}, garage : {}", vehiculeRequete, garageId);
 
         VehiculeEntreDto dto = VehiculeMapper.transformerEntreDto(vehiculeRequete);
 
@@ -41,7 +41,7 @@ public class VehiculeController implements VehiculeApi {
 
         VehiculeReponse response = VehiculeMapper.transformerReponse(sortieDto);
 
-        LOGGER.info(" fin ajoutervehicule: {} ", response.id());
+        LOGGER.info(" fin ajouter vehicule: {} ", response.id());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -52,7 +52,7 @@ public class VehiculeController implements VehiculeApi {
             VehiculeRequete vehiculeRequete
     ) {
 
-        LOGGER.info(" debut modifierVehicule: {}", vehiculeId);
+        LOGGER.info(" debut modifier Vehicule: {}", vehiculeId);
 
         VehiculeEntreDto dto = VehiculeMapper.transformerEntreDto(vehiculeRequete);
 
@@ -60,7 +60,7 @@ public class VehiculeController implements VehiculeApi {
 
         VehiculeReponse response = VehiculeMapper.transformerReponse(sortieDto);
 
-        LOGGER.info(" fin modifierVehicule: {} ", vehiculeId);
+        LOGGER.info(" fin modifier Vehicule: {} ", vehiculeId);
 
         return ResponseEntity.ok(response);
     }
@@ -68,11 +68,11 @@ public class VehiculeController implements VehiculeApi {
     @Override
     public ResponseEntity<Void> supprimerVehicule(Long vehiculeId) {
 
-        LOGGER.info(" debut supprimerVehicule: {}", vehiculeId);
+        LOGGER.info(" debut supprimer Vehicule: {}", vehiculeId);
 
         vehiculeService.supprimerVehicule(vehiculeId);
 
-        LOGGER.info(" fin supprimerVehicule: {}", vehiculeId);
+        LOGGER.info(" fin supprimer Vehicule: {}", vehiculeId);
 
         return ResponseEntity.noContent().build();
     }
@@ -80,7 +80,7 @@ public class VehiculeController implements VehiculeApi {
     @Override
     public ResponseEntity<List<VehiculeReponse>> listerVehiculesGarage(Long garageId) {
 
-        LOGGER.info(" debut listerVehiculesGarage pour le garage: {}", garageId);
+        LOGGER.info(" debut lister Vehicules Garage pour le garage: {}", garageId);
 
         List<VehiculeSortieDto> dtos = vehiculeService.listerVehiculesGarage(garageId);
 
@@ -89,7 +89,7 @@ public class VehiculeController implements VehiculeApi {
                         .map(VehiculeMapper::transformerReponse)
                         .toList();
 
-        LOGGER.info(" fin listerVehiculesGarage pour le garage: {}", garageId);
+        LOGGER.info(" fin lister Vehicules Garage pour le garage: {}", garageId);
 
         return ResponseEntity.ok(responses);
     }
@@ -97,7 +97,7 @@ public class VehiculeController implements VehiculeApi {
     @Override
     public ResponseEntity<List<VehiculeReponse>> listerVehiculesParModele(String modele) {
 
-        LOGGER.info(" debut listerVehiculesParModele pour le modele: {}", modele);
+        LOGGER.info(" debut lister Vehicules Par Modele pour le modele: {}", modele);
 
         List<VehiculeSortieDto> dtos =
                 vehiculeService.listerVehiculesParModele(modele);
@@ -107,7 +107,7 @@ public class VehiculeController implements VehiculeApi {
                         .map(VehiculeMapper::transformerReponse)
                         .toList();
 
-        LOGGER.info(" fin listerVehiculesParModele pour le modele: {}", modele);
+        LOGGER.info(" fin lister Vehicules Par Modele pour le modele: {}", modele);
 
         return ResponseEntity.ok(responses);
     }

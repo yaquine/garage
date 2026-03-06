@@ -31,6 +31,6 @@ public enum CarburantEnum {
             }
         }
 
-        throw new InvalidEnumException("VEHICULE_CARBURANT" );
+        throw new InvalidEnumException("VEHICULE_CARBURANT");
     }
 }
