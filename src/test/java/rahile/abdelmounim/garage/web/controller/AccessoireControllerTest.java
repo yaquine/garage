@@ -56,7 +56,7 @@ class AccessoireControllerTest {
         garage.setEmail("garage@test.com");
         garage.setTelephone("0123456789");
         garage.setAddresse("123 Test Street");
-        garage.setEtat(EntiteAuditAbstraite.EtatEntiteEnum.ACTIVE);
+        garage.setEtat(EntiteAuditeAbstraite.EtatEntiteEnum.ACTIVE);
         garage = garageRepository.save(garage);
 
         Vehicule vehicule = new Vehicule();
@@ -64,7 +64,7 @@ class AccessoireControllerTest {
         vehicule.setMatricule("ABC-123");
         vehicule.setModele(ModeleVehicule.PEUGEOT);
         vehicule.setTypeCarburant(CarburantEnum.ESSENCE);
-        vehicule.setEtat(EntiteAuditAbstraite.EtatEntiteEnum.ACTIVE);
+        vehicule.setEtat(EntiteAuditeAbstraite.EtatEntiteEnum.ACTIVE);
         vehicule.setAnneeFabrication(Year.of(2022));
         vehicule = vehiculeRepository.save(vehicule);
 
@@ -84,7 +84,7 @@ class AccessoireControllerTest {
                 .andExpect(status().isCreated());
 
 
-        Accessoire accessoirePersisted = accessoireRepository.findByIdAndEtat(1L, EntiteAuditAbstraite.EtatEntiteEnum.ACTIVE)
+        Accessoire accessoirePersisted = accessoireRepository.findByIdAndEtat(1L, EntiteAuditeAbstraite.EtatEntiteEnum.ACTIVE)
                 .orElseThrow(() -> new AssertionError("Accessoire not created!"));
 
         assertEquals("Accessoire Test", accessoirePersisted.getNom());

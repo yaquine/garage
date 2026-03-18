@@ -23,11 +23,11 @@ public interface AccessoireApi {
                                                          @RequestBody AccessoireRequete accessoireRequete);
 
 
-    @PutMapping("/{accessoireId}/disactiver")
-    ResponseEntity<Void> supprimerAccessoire(@PathVariable Long accessoireId);
+    @PutMapping("/{accessoireId}/desactiver")
+    ResponseEntity<Void> desactiverAccessoire(@PathVariable Long accessoireId);
 
 
     @GetMapping("/vehicules/{vehiculeId}")
-    ResponseEntity<List<AccessoireReponse>> listerAccessoiresVehicule(@PathVariable Long vehiculeId);
+    ResponseEntity<List<AccessoireReponse>> listerAccessoireVehicule(@PathVariable Long vehiculeId);
 
 }

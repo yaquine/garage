@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.time.OffsetDateTime;
 
 @ControllerAdvice
-public class GlobaleExceptionHandleur {
+public class GlobaleExceptionGestionController {
 
 
     @ExceptionHandler(GarageInexistantException.class)
-    public ResponseEntity<ApiErrorResponse> gererGarageException(
+    public ResponseEntity<ApiErreurReponse> gererGarageException(
             GarageInexistantException ex) {
 
-        ApiErrorResponse error = new ApiErrorResponse(
+        ApiErreurReponse error = new ApiErreurReponse(
                 ex.getCode(),
                 ex.getMessage(),
                 OffsetDateTime.now()
@@ -28,10 +28,10 @@ public class GlobaleExceptionHandleur {
     }
 
     @ExceptionHandler(VehiculeInexistantException.class)
-    public ResponseEntity<ApiErrorResponse> gererVehiculeException(
+    public ResponseEntity<ApiErreurReponse> gererVehiculeException(
             VehiculeInexistantException ex) {
 
-        ApiErrorResponse error = new ApiErrorResponse(
+        ApiErreurReponse error = new ApiErreurReponse(
                 ex.getCode(),
                 ex.getMessage(),
                 OffsetDateTime.now()
@@ -42,11 +42,11 @@ public class GlobaleExceptionHandleur {
         return new ResponseEntity<>(error, status);
     }
 
-    @ExceptionHandler(InvalidEnumException.class)
-    public ResponseEntity<ApiErrorResponse> gererInvalidEnumException(
-            InvalidEnumException ex) {
+    @ExceptionHandler(InvalidationEnumException.class)
+    public ResponseEntity<ApiErreurReponse> gererInvalidEnumException(
+            InvalidationEnumException ex) {
 
-        ApiErrorResponse error = new ApiErrorResponse(
+        ApiErreurReponse error = new ApiErreurReponse(
                 ex.getCode(),
                 ex.getMessage(),
                 OffsetDateTime.now()
@@ -58,10 +58,10 @@ public class GlobaleExceptionHandleur {
     }
 
     @ExceptionHandler(VehiculeCapacitieSurpasseException.class)
-    public ResponseEntity<ApiErrorResponse> gererVehiculeCapacitieSurpasseException(
+    public ResponseEntity<ApiErreurReponse> gererVehiculeCapacitieSurpasseException(
             VehiculeCapacitieSurpasseException ex) {
 
-        ApiErrorResponse error = new ApiErrorResponse(
+        ApiErreurReponse error = new ApiErreurReponse(
                 ex.getCode(),
                 ex.getMessage(),
                 OffsetDateTime.now()
@@ -73,9 +73,9 @@ public class GlobaleExceptionHandleur {
     }
 
     @ExceptionHandler(DataAccessException.class)
-    public ResponseEntity<ApiErrorResponse> gererGenericException(DataAccessException ex) {
+    public ResponseEntity<ApiErreurReponse> gererGenericException(DataAccessException ex) {
 
-        ApiErrorResponse error = new ApiErrorResponse(
+        ApiErreurReponse error = new ApiErreurReponse(
                 "INTERNAL_ERROR",
                 "An unexpected error occurred: " + ex.getMessage(),
                 OffsetDateTime.now()
@@ -94,7 +94,7 @@ public class GlobaleExceptionHandleur {
         }
 
         if (
-                ex instanceof InvalidEnumException ||
+                ex instanceof InvalidationEnumException ||
                         ex instanceof VehiculeCapacitieSurpasseException
         ) {
 

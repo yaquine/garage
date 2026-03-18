@@ -11,7 +11,7 @@ public interface AccessoireService {
 
     AccessoireSortieDto modifierAccessoire(Long accessoireId, AccessoireEntreDto dto);
 
-    void supprimerAccessoire(Long accessoireId);
+    void desactiverAccessoire(Long accessoireId);
 
     List<AccessoireSortieDto> listerAccessoiresVehicule(Long vehiculeId);
 }

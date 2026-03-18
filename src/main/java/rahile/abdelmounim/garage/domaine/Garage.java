@@ -2,6 +2,7 @@ package rahile.abdelmounim.garage.domaine;
 
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.SQLDelete;
 import rahile.abdelmounim.garage.commun.erreur.VehiculeCapacitieSurpasseException;
 
 import java.util.HashSet;
@@ -10,7 +11,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "garage")
-public class Garage extends EntiteAuditAbstraite{
+@SQLDelete(sql = "UPDATE garage SET etat = 'INACTIVE' WHERE id = ?")
+public class Garage extends EntiteAuditeAbstraite {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -110,7 +112,7 @@ public class Garage extends EntiteAuditAbstraite{
         vehicules.add(vehicule);
     }
 
-    public void supprimerVehicule(Vehicule vehicule) {
+    public void desactiverVehicule(Vehicule vehicule) {
         vehicules.remove(vehicule);
         vehicule.setGarage(null);
     }

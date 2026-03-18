@@ -6,7 +6,7 @@ import rahile.abdelmounim.garage.service.dto.AccessoireSortieDto;
 import rahile.abdelmounim.garage.web.reponse.AccessoireReponse;
 import rahile.abdelmounim.garage.web.requete.AccessoireRequete;
 
-public interface AccessoireMapper {
+public interface AccessoireMappeur {
 
     static AccessoireEntreDto transformerEntreDto(
             AccessoireRequete requete

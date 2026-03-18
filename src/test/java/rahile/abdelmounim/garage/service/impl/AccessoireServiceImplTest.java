@@ -12,7 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import rahile.abdelmounim.garage.commun.erreur.AccessoireInexistantException;
 import rahile.abdelmounim.garage.commun.erreur.VehiculeInexistantException;
 import rahile.abdelmounim.garage.domaine.Accessoire;
-import rahile.abdelmounim.garage.domaine.EntiteAuditAbstraite;
+import rahile.abdelmounim.garage.domaine.EntiteAuditeAbstraite;
 import rahile.abdelmounim.garage.domaine.Vehicule;
 import rahile.abdelmounim.garage.repository.AccessoireRepository;
 import rahile.abdelmounim.garage.repository.VehiculeRepository;
@@ -50,7 +50,7 @@ class AccessoireServiceImplTest {
 
         AccessoireEntreDto dto = new AccessoireEntreDto("Nom", "Desc", new BigDecimal("100.0"), "Type", "Code");
 
-        when(vehiculeRepository.findByIdAndEtat(1L, EntiteAuditAbstraite.EtatEntiteEnum.ACTIVE)).thenReturn(Optional.of(vehicule));
+        when(vehiculeRepository.findByIdAndEtat(1L, EntiteAuditeAbstraite.EtatEntiteEnum.ACTIVE)).thenReturn(Optional.of(vehicule));
 
         when(accessoireRepository.save(any(Accessoire.class))).thenAnswer(i -> i.getArgument(0));
 
@@ -64,7 +64,7 @@ class AccessoireServiceImplTest {
     @Test
     void ajouterAccessoire_vehicule_non_trouve_erreur() {
 
-        when(vehiculeRepository.findByIdAndEtat(1L, EntiteAuditAbstraite.EtatEntiteEnum.ACTIVE)).thenReturn(Optional.empty());
+        when(vehiculeRepository.findByIdAndEtat(1L, EntiteAuditeAbstraite.EtatEntiteEnum.ACTIVE)).thenReturn(Optional.empty());
 
         AccessoireEntreDto dto = new AccessoireEntreDto("Nom", "Desc", new BigDecimal("100.0"),
                 "Type", "Code");
@@ -76,7 +76,7 @@ class AccessoireServiceImplTest {
     @Test
     void modifierAccessoire_accessoire_non_trouve_erreur() {
 
-        when(accessoireRepository.findByIdAndEtat(1L, EntiteAuditAbstraite.EtatEntiteEnum.ACTIVE))
+        when(accessoireRepository.findByIdAndEtat(1L, EntiteAuditeAbstraite.EtatEntiteEnum.ACTIVE))
                 .thenReturn(Optional.empty());
 
         AccessoireEntreDto dto = new AccessoireEntreDto("Nom", "Desc", new BigDecimal("100.0"),

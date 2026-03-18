@@ -25,7 +25,7 @@ public interface VehiculeApi {
     );
 
     @PutMapping("/{vehiculeId}/disactiver")
-    ResponseEntity<Void> supprimerVehicule(
+    ResponseEntity<Void> desactiverVehicule(
             @PathVariable Long vehiculeId
     );
 
@@ -35,7 +35,7 @@ public interface VehiculeApi {
     );
 
     @GetMapping("/modeles/{modele}")
-    ResponseEntity<List<VehiculeReponse>> listerVehiculesParModele(
+    ResponseEntity<List<VehiculeReponse>> listerVehiculeParModele(
             @PathVariable String modele
     );
 }

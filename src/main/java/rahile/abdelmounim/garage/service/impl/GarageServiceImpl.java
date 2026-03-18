@@ -8,15 +8,15 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rahile.abdelmounim.garage.commun.erreur.GarageInexistantException;
-import rahile.abdelmounim.garage.commun.mappeur.GarageMapper;
-import rahile.abdelmounim.garage.domaine.EntiteAuditAbstraite;
+import rahile.abdelmounim.garage.commun.mappeur.GarageMappeur;
+import rahile.abdelmounim.garage.domaine.EntiteAuditeAbstraite;
 import rahile.abdelmounim.garage.domaine.Garage;
 import rahile.abdelmounim.garage.repository.GarageRepository;
 import rahile.abdelmounim.garage.repository.specification.GarageSpecification;
 import rahile.abdelmounim.garage.service.GarageService;
 import rahile.abdelmounim.garage.service.dto.GarageEntreDto;
 import rahile.abdelmounim.garage.service.dto.GarageSortieDto;
-import rahile.abdelmounim.garage.web.requete.GarageReadRequete;
+import rahile.abdelmounim.garage.web.requete.GarageLectureRequete;
 
 @Service
 public class GarageServiceImpl implements GarageService {
@@ -34,81 +34,79 @@ public class GarageServiceImpl implements GarageService {
     @Transactional
     public GarageSortieDto ajouterGarage(GarageEntreDto garageEntreDto) {
 
-        LOGGER.info(" debut ajouter Garage");
+        LOGGER.info(" Début, ajouter garage: {}", garageEntreDto);
 
-        Garage garage = GarageMapper.transformerEntite(garageEntreDto);
+        Garage garage = GarageMappeur.transformerEntite(garageEntreDto);
 
         garage = garageRepository.saveAndFlush(garage);
 
-        LOGGER.info(" fin ajouter Garage");
+        LOGGER.info(" Fin ajouter Garage, id : {}", garage.getId());
 
-        return GarageMapper.transformerSortieDto(garage);
+        return GarageMappeur.transformerSortieDto(garage);
     }
 
     @Override
     @Transactional
     public GarageSortieDto modifierGarage(Long id, GarageEntreDto garageEntreDto) {
 
-        LOGGER.info("debut modifierGarage {}", id);
+        LOGGER.info("Début modifier Garage, id : {}", id);
 
-        Garage garage = garageRepository.findByIdAndEtat(id, EntiteAuditAbstraite.EtatEntiteEnum.ACTIVE)
+        Garage garage = garageRepository.findByIdAndEtat(id, EntiteAuditeAbstraite.EtatEntiteEnum.ACTIVE)
                 .orElseThrow(() -> new GarageInexistantException(id));
 
-        GarageMapper.transformerEntiteModifcation(garage, garageEntreDto);
+        GarageMappeur.transformerEntiteModifcation(garage, garageEntreDto);
 
         garage = garageRepository.saveAndFlush(garage);
 
-        LOGGER.info("fin modifierGarage {}", id);
+        LOGGER.info("Fin modifier Garage, id : {}", id);
 
-        return GarageMapper.transformerSortieDto(garage);
+        return GarageMappeur.transformerSortieDto(garage);
     }
 
     @Override
     @Transactional
-    public void supprimerGarage(Long id) {
+    public void desactiverGarage(Long id) {
 
-        LOGGER.info("debut supprimerGarage {}", id);
+        LOGGER.info("Début désactiver garage, id:  {}", id);
 
-        Garage garage = garageRepository.findByIdAndEtat(id, EntiteAuditAbstraite.EtatEntiteEnum.ACTIVE)
+        Garage garage = garageRepository.findByIdAndEtat(id, EntiteAuditeAbstraite.EtatEntiteEnum.ACTIVE)
                 .orElseThrow(() -> new GarageInexistantException(id));
 
-        garage.setEtat(EntiteAuditAbstraite.EtatEntiteEnum.INACTIVE);
+        garageRepository.desactiverGarage(garage);
 
-        garageRepository.save(garage);
-
-        LOGGER.info("fin supprimerGarage {}", id);
+        LOGGER.info("Fin désactiver garage, id:  {}", id);
     }
 
     @Override
     @Transactional(readOnly = true)
     public GarageSortieDto trouverGarageParId(Long id) {
 
-        LOGGER.info("debut trouver Garage Par Id {}", id);
+        LOGGER.info("Début trouver Garage Par Id: {}", id);
 
-        Garage garage = garageRepository.findByIdAndEtat(id, EntiteAuditAbstraite.EtatEntiteEnum.ACTIVE)
-                .orElseThrow(() -> new GarageInexistantException( id));
+        Garage garage = garageRepository.findByIdAndEtat(id, EntiteAuditeAbstraite.EtatEntiteEnum.ACTIVE)
+                .orElseThrow(() -> new GarageInexistantException(id));
 
-        LOGGER.info("fin trouver Garage Par Id {}", id);
+        LOGGER.info("Fin trouver Garage Par Id: {}", id);
 
-        return GarageMapper.transformerSortieDto(garage);
+        return GarageMappeur.transformerSortieDto(garage);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Page<GarageSortieDto> chercherGarages(
-            GarageReadRequete garageReadRequete,
+            GarageLectureRequete garageLectureRequete,
             Pageable pageable
     ) {
 
-        LOGGER.info("debut chercher Garages");
+        LOGGER.info("Début chercher Garages: {}", garageLectureRequete);
 
         Specification<Garage> specification =
-                new GarageSpecification(garageReadRequete);
+                new GarageSpecification(garageLectureRequete);
 
         Page<Garage> page = garageRepository.findAll(specification, pageable);
 
-        LOGGER.info("fin chercher Garages");
+        LOGGER.info("Fin chercher Garages: {}");
 
-        return page.map(GarageMapper::transformerSortieDto);
+        return page.map(GarageMappeur::transformerSortieDto);
     }
 }

@@ -1,8 +1,8 @@
 package rahile.abdelmounim.garage.commun.erreur;
 
-public class InvalidEnumException extends BusinessException {
+public class InvalidationEnumException extends BusinessException {
 
-    public InvalidEnumException(String code) {
+    public InvalidationEnumException(String code) {
 
         super("INVALID_ENUM_EXCEPTION",
                 "Invalid Input enum for " + code);

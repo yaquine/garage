@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rahile.abdelmounim.garage.commun.erreur.GarageInexistantException;
 import rahile.abdelmounim.garage.commun.erreur.VehiculeInexistantException;
-import rahile.abdelmounim.garage.commun.mappeur.VehiculeMapper;
-import rahile.abdelmounim.garage.domaine.EntiteAuditAbstraite;
+import rahile.abdelmounim.garage.commun.mappeur.VehiculeMappeur;
+import rahile.abdelmounim.garage.domaine.EntiteAuditeAbstraite;
 import rahile.abdelmounim.garage.domaine.Garage;
 import rahile.abdelmounim.garage.domaine.ModeleVehicule;
 import rahile.abdelmounim.garage.domaine.Vehicule;
-import rahile.abdelmounim.garage.evenement.event.VehiculeAjouteEvent;
+import rahile.abdelmounim.garage.evenement.dto.VehiculeAjoutEvenement;
 import rahile.abdelmounim.garage.repository.GarageRepository;
 import rahile.abdelmounim.garage.repository.VehiculeRepository;
 import rahile.abdelmounim.garage.service.VehiculeService;
@@ -31,66 +31,66 @@ public class VehiculeServiceImpl implements VehiculeService {
 
     private final VehiculeRepository vehiculeRepository;
     private final GarageRepository garageRepository;
-    private final ApplicationEventPublisher eventPublisher;
+    private final ApplicationEventPublisher eventPublisheur;
 
-    public VehiculeServiceImpl(VehiculeRepository vehiculeRepository, GarageRepository garageRepository, ApplicationEventPublisher eventPublisher) {
+    public VehiculeServiceImpl(VehiculeRepository vehiculeRepository, GarageRepository garageRepository, ApplicationEventPublisher eventPublisheur) {
         this.vehiculeRepository = vehiculeRepository;
         this.garageRepository = garageRepository;
-        this.eventPublisher = eventPublisher;
+        this.eventPublisheur = eventPublisheur;
     }
 
     @Override
     public VehiculeSortieDto ajouterVehicule(Long garageId, VehiculeEntreDto vehiculeEntreDto) {
 
-        LOGGER.info(" debut ajouter vehicule: {}, garage : {}", vehiculeEntreDto, garageId);
+        LOGGER.info(" Début ajouter véhicule : {}, garage id : {}", vehiculeEntreDto, garageId);
 
-        Garage garage = garageRepository.findByIdAndEtat(garageId, EntiteAuditAbstraite.EtatEntiteEnum.ACTIVE)
+        Garage garage = garageRepository.findByIdAndEtat(garageId, EntiteAuditeAbstraite.EtatEntiteEnum.ACTIVE)
                 .orElseThrow(() -> new GarageInexistantException(garageId));
 
-        Vehicule vehicule = VehiculeMapper.transformerEntite(vehiculeEntreDto);
+        Vehicule vehicule = VehiculeMappeur.transformerEntite(vehiculeEntreDto);
 
         garage.ajouterVehicule(vehicule);
 
         vehicule = vehiculeRepository.save(vehicule);
 
-        eventPublisher.publishEvent(new VehiculeAjouteEvent(vehicule.getId(), garageId));
+        eventPublisheur.publishEvent(new VehiculeAjoutEvenement(vehicule.getId(), garageId));
 
-        LOGGER.info(" fin ajouter vehicule: {} ", vehicule);
+        LOGGER.info(" Fin ajouter véhicule : {} ", vehicule);
 
 
-        return VehiculeMapper.transformerDto(vehicule);
+        return VehiculeMappeur.transformerDto(vehicule);
     }
 
     @Override
     public VehiculeSortieDto modifierVehicule(Long vehiculeId, VehiculeEntreDto dto) {
 
-        LOGGER.info(" debut modifier Vehicule: {}", vehiculeId);
+        LOGGER.info(" Début modifier véhicule par id: {}", vehiculeId);
 
-        Vehicule vehicule = vehiculeRepository.findByIdAndEtat(vehiculeId, EntiteAuditAbstraite.EtatEntiteEnum.ACTIVE)
+        Vehicule vehicule = vehiculeRepository.findByIdAndEtat(vehiculeId, EntiteAuditeAbstraite.EtatEntiteEnum.ACTIVE)
                 .orElseThrow(() -> new VehiculeInexistantException(vehiculeId));
 
-        VehiculeMapper.mettreAJourEntity(vehicule, dto);
+        VehiculeMappeur.mettreAJourEntity(vehicule, dto);
 
-        LOGGER.info(" fin modifier Vehicule: {} ", vehiculeId);
+        LOGGER.info(" Fin modifier véhicule par id : {} ", vehiculeId);
 
-        return VehiculeMapper.transformerDto(vehicule);
+        return VehiculeMappeur.transformerDto(vehicule);
     }
 
     @Override
-    public void supprimerVehicule(Long vehiculeId) {
+    public void desactiverVehicule(Long vehiculeId) {
 
-        LOGGER.info(" debut supprimer Vehicule: {}", vehiculeId);
+        LOGGER.info(" Début, désactiver véhicule par id : {}", vehiculeId);
 
-        Vehicule vehicule = vehiculeRepository.findByIdAndEtat(vehiculeId, EntiteAuditAbstraite.EtatEntiteEnum.ACTIVE)
+        Vehicule vehicule = vehiculeRepository.findByIdAndEtat(vehiculeId, EntiteAuditeAbstraite.EtatEntiteEnum.ACTIVE)
                 .orElseThrow(() -> new VehiculeInexistantException(vehiculeId));
 
         Garage garage = vehicule.getGarage();
 
-        garage.supprimerVehicule(vehicule);
+        garage.desactiverVehicule(vehicule);
 
         garageRepository.save(garage);
 
-        LOGGER.info(" fin supprimerVehicule: {}", vehiculeId);
+        LOGGER.info(" Fin, désactiver véhicule par id: {}", vehiculeId);
 
     }
 
@@ -98,12 +98,12 @@ public class VehiculeServiceImpl implements VehiculeService {
     @Transactional(readOnly = true)
     public List<VehiculeSortieDto> listerVehiculesGarage(Long garageId) {
 
-        LOGGER.info(" debut lister Vehicules Garage pour le garage: {}", garageId);
+        LOGGER.info(" Début lister véhicules Garage pour le garage id: {}", garageId);
 
 
-        return vehiculeRepository.findByGarageIdAndEtat(garageId, EntiteAuditAbstraite.EtatEntiteEnum.ACTIVE)
+        return vehiculeRepository.findByGarageIdAndEtat(garageId, EntiteAuditeAbstraite.EtatEntiteEnum.ACTIVE)
                 .stream()
-                .map(VehiculeMapper::transformerDto)
+                .map(VehiculeMappeur::transformerDto)
                 .toList();
     }
 
@@ -111,13 +111,13 @@ public class VehiculeServiceImpl implements VehiculeService {
     @Transactional(readOnly = true)
     public List<VehiculeSortieDto> listerVehiculesParModele(String modele) {
 
-        LOGGER.info(" debut listerVehiculesParModele pour le modele: {}", modele);
+        LOGGER.info(" Début liste véhicules par modèle : {}", modele);
 
         ModeleVehicule modeleEnum = ModeleVehicule.fromValue(modele);
 
-        return vehiculeRepository.findByModeleAndEtat(modeleEnum, EntiteAuditAbstraite.EtatEntiteEnum.ACTIVE)
+        return vehiculeRepository.findByModeleAndEtat(modeleEnum, EntiteAuditeAbstraite.EtatEntiteEnum.ACTIVE)
                 .stream()
-                .map(VehiculeMapper::transformerDto)
+                .map(VehiculeMappeur::transformerDto)
                 .toList();
     }
 }

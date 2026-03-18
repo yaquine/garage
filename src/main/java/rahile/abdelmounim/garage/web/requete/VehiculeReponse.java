@@ -9,4 +9,5 @@ public record VehiculeReponse(
         String matricule,
         Long garageId
 
-) {}
+) {
+}

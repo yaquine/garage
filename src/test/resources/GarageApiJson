@@ -169,3 +169,13 @@ POST /api/v1/garages/chercher?page=0&size=5&sort=nom,asc
   "nom": "auto",
   "addresse": "casa"
 }
+
+
+{
+  "page": 0,
+  "size": 10,
+  "sort": [
+    "nom,asc",
+    "description,desc"
+  ]
+}

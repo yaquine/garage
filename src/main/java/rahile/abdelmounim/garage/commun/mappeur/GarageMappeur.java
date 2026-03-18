@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public interface GarageMapper {
+public interface GarageMappeur {
 
     static GarageEntreDto transformerDto(GarageRequete requeteGarage) {
 
@@ -39,7 +39,7 @@ public interface GarageMapper {
                                     Map.Entry::getKey,
                                     entry -> entry.getValue()
                                             .stream()
-                                            .map(GarageMapper::transformerHoraireOuverture)
+                                            .map(GarageMappeur::transformerHoraireOuverture)
                                             .collect(Collectors.toSet())
                             ));
 
@@ -98,7 +98,7 @@ public interface GarageMapper {
         garage.setEmail(dto.email());
 
         Set<HoraireOuverture> horaires =
-                transformerHoraireOuvertures(dto.horaireOuverturesMap());
+                transformerHoraireOuverture(dto.horaireOuverturesMap());
 
         horaires.forEach(garage::ajouterHoraireOuverture);
 
@@ -117,7 +117,7 @@ public interface GarageMapper {
         entity.setEmail(dto.email());
 
         Set<HoraireOuverture> horaires =
-                transformerHoraireOuvertures(dto.horaireOuverturesMap());
+                transformerHoraireOuverture(dto.horaireOuverturesMap());
 
         if (entity.getHoraireOuverturesSet() != null) {
             entity.getHoraireOuverturesSet().clear();
@@ -129,23 +129,23 @@ public interface GarageMapper {
     }
 
 
-    static GarageSortieDto transformerSortieDto(Garage entity) {
+    static GarageSortieDto transformerSortieDto(Garage garage) {
 
-        if (entity == null) {
+        if (garage == null) {
             return null;
         }
 
         return new GarageSortieDto(
-                entity.getId(),
-                entity.getNom(),
-                entity.getAddresse(),
-                entity.getTelephone(),
-                entity.getEmail(),
-                GarageMapper.transformerHoraireOuverturesDto(entity.getHoraireOuverturesSet())
+                garage.getId(),
+                garage.getNom(),
+                garage.getAddresse(),
+                garage.getTelephone(),
+                garage.getEmail(),
+                GarageMappeur.transformerHoraireOuvertureDto(garage.getHoraireOuverturesSet())
         );
     }
 
-    private static Map<DayOfWeek, Set<HoraireOuvertureDto>> transformerHoraireOuverturesDto(
+    private static Map<DayOfWeek, Set<HoraireOuvertureDto>> transformerHoraireOuvertureDto(
             Set<HoraireOuverture> source
     ) {
 
@@ -157,7 +157,7 @@ public interface GarageMapper {
                 .collect(Collectors.groupingBy(
                         HoraireOuverture::getJour,
                         Collectors.mapping(
-                                GarageMapper::transformerHoraireDto,
+                                GarageMappeur::transformerHoraireDto,
                                 Collectors.toSet()
                         )
                 ));
@@ -186,7 +186,7 @@ public interface GarageMapper {
     }
 
 
-    private static Set<HoraireOuverture> transformerHoraireOuvertures(
+    private static Set<HoraireOuverture> transformerHoraireOuverture(
             Map<DayOfWeek, Set<HoraireOuvertureDto>> source
     ) {
 
@@ -260,7 +260,7 @@ public interface GarageMapper {
         }
 
         return source.stream()
-                .map(GarageMapper::transformerHoraireRequete)
+                .map(GarageMappeur::transformerHoraireRequete)
                 .collect(Collectors.toSet());
     }
 

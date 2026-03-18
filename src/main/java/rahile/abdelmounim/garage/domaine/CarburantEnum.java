@@ -1,6 +1,6 @@
 package rahile.abdelmounim.garage.domaine;
 
-import rahile.abdelmounim.garage.commun.erreur.InvalidEnumException;
+import rahile.abdelmounim.garage.commun.erreur.InvalidationEnumException;
 
 public enum CarburantEnum {
 
@@ -31,6 +31,6 @@ public enum CarburantEnum {
             }
         }
 
-        throw new InvalidEnumException("VEHICULE_CARBURANT");
+        throw new InvalidationEnumException("VEHICULE_CARBURANT");
     }
 }

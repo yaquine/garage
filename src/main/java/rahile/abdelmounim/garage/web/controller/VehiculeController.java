@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-import rahile.abdelmounim.garage.commun.mappeur.VehiculeMapper;
+import rahile.abdelmounim.garage.commun.mappeur.VehiculeMappeur;
 import rahile.abdelmounim.garage.service.VehiculeService;
 import rahile.abdelmounim.garage.service.dto.VehiculeEntreDto;
 import rahile.abdelmounim.garage.service.dto.VehiculeSortieDto;
@@ -33,15 +33,15 @@ public class VehiculeController implements VehiculeApi {
             VehiculeRequete vehiculeRequete
     ) {
 
-        LOGGER.info(" debut ajouter vehicule: {}, garage : {}", vehiculeRequete, garageId);
+        LOGGER.info(" Début ajouter véhicule : {}, garage id : {}", vehiculeRequete, garageId);
 
-        VehiculeEntreDto dto = VehiculeMapper.transformerEntreDto(vehiculeRequete);
+        VehiculeEntreDto dto = VehiculeMappeur.transformerEntreDto(vehiculeRequete);
 
         VehiculeSortieDto sortieDto = vehiculeService.ajouterVehicule(garageId, dto);
 
-        VehiculeReponse response = VehiculeMapper.transformerReponse(sortieDto);
+        VehiculeReponse response = VehiculeMappeur.transformerReponse(sortieDto);
 
-        LOGGER.info(" fin ajouter vehicule: {} ", response.id());
+        LOGGER.info(" Fin ajouter véhicule par : {} ", response.id());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -52,27 +52,27 @@ public class VehiculeController implements VehiculeApi {
             VehiculeRequete vehiculeRequete
     ) {
 
-        LOGGER.info(" debut modifier Vehicule: {}", vehiculeId);
+        LOGGER.info(" Début modifier Vehicule par id : {}", vehiculeId);
 
-        VehiculeEntreDto dto = VehiculeMapper.transformerEntreDto(vehiculeRequete);
+        VehiculeEntreDto dto = VehiculeMappeur.transformerEntreDto(vehiculeRequete);
 
         VehiculeSortieDto sortieDto = vehiculeService.modifierVehicule(vehiculeId, dto);
 
-        VehiculeReponse response = VehiculeMapper.transformerReponse(sortieDto);
+        VehiculeReponse response = VehiculeMappeur.transformerReponse(sortieDto);
 
-        LOGGER.info(" fin modifier Vehicule: {} ", vehiculeId);
+        LOGGER.info(" Fin modifier Vehicule par id: {} ", vehiculeId);
 
         return ResponseEntity.ok(response);
     }
 
     @Override
-    public ResponseEntity<Void> supprimerVehicule(Long vehiculeId) {
+    public ResponseEntity<Void> desactiverVehicule(Long vehiculeId) {
 
-        LOGGER.info(" debut supprimer Vehicule: {}", vehiculeId);
+        LOGGER.info(" Début, désactiver véhicule par id : {}", vehiculeId);
 
-        vehiculeService.supprimerVehicule(vehiculeId);
+        vehiculeService.desactiverVehicule(vehiculeId);
 
-        LOGGER.info(" fin supprimer Vehicule: {}", vehiculeId);
+        LOGGER.info(" Fin, désactiver véhicule par id : {}", vehiculeId);
 
         return ResponseEntity.noContent().build();
     }
@@ -80,34 +80,34 @@ public class VehiculeController implements VehiculeApi {
     @Override
     public ResponseEntity<List<VehiculeReponse>> listerVehiculesGarage(Long garageId) {
 
-        LOGGER.info(" debut lister Vehicules Garage pour le garage: {}", garageId);
+        LOGGER.info(" Début liste véhicule de garage pour le garage id: {}", garageId);
 
         List<VehiculeSortieDto> dtos = vehiculeService.listerVehiculesGarage(garageId);
 
         List<VehiculeReponse> responses =
                 dtos.stream()
-                        .map(VehiculeMapper::transformerReponse)
+                        .map(VehiculeMappeur::transformerReponse)
                         .toList();
 
-        LOGGER.info(" fin lister Vehicules Garage pour le garage: {}", garageId);
+        LOGGER.info(" Fin liste véhicule de garage pour le garage id : {}", garageId);
 
         return ResponseEntity.ok(responses);
     }
 
     @Override
-    public ResponseEntity<List<VehiculeReponse>> listerVehiculesParModele(String modele) {
+    public ResponseEntity<List<VehiculeReponse>> listerVehiculeParModele(String modele) {
 
-        LOGGER.info(" debut lister Vehicules Par Modele pour le modele: {}", modele);
+        LOGGER.info(" Début lister véhicules par modèle : {}", modele);
 
         List<VehiculeSortieDto> dtos =
                 vehiculeService.listerVehiculesParModele(modele);
 
         List<VehiculeReponse> responses =
                 dtos.stream()
-                        .map(VehiculeMapper::transformerReponse)
+                        .map(VehiculeMappeur::transformerReponse)
                         .toList();
 
-        LOGGER.info(" fin lister Vehicules Par Modele pour le modele: {}", modele);
+        LOGGER.info(" Fin lister véhicules par modèle : {}", modele);
 
         return ResponseEntity.ok(responses);
     }

@@ -8,4 +8,5 @@ public record VehiculeEntreDto(
         String typeCarburant,
         String matricule
 
-) {}
+) {
+}

@@ -19,13 +19,13 @@ import java.util.Optional;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(value = { "rahile.abdelmounim.garage.repository" })
+@EnableJpaRepositories(value = {"rahile.abdelmounim.garage.repository"})
 @EnableJpaAuditing(auditorAwareRef = "auditorProvider", dateTimeProviderRef = "auditingDateTimeProvider")
 public class PersistenceConfiguration {
 
     @Bean
-    AuditorAware<String> auditorProvider() {
-        return new AuditorAwareImpl();
+    AuditorAware<String> auditeurProvideur() {
+        return new AuditeurAwareImpl();
     }
 
     @Primary
@@ -33,8 +33,9 @@ public class PersistenceConfiguration {
     public PlatformTransactionManager transactionManager(@Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
+
     @Bean(name = "auditingDateTimeProvider")
-    public DateTimeProvider dateTimeProvider() {
+    public DateTimeProvider dateTimeProvideur() {
         return () -> Optional.of(OffsetDateTime.now());
     }
 

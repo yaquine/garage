@@ -10,4 +10,5 @@ public record AccessoireReponse(
         String type,
         String code,
         Long vehiculeId
-) {}
+) {
+}

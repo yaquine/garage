@@ -10,7 +10,7 @@ import rahile.abdelmounim.garage.web.requete.VehiculeRequete;
 
 import java.time.Year;
 
-public interface VehiculeMapper {
+public interface VehiculeMappeur {
 
     static Vehicule transformerEntite(VehiculeEntreDto vehiculeEntreDto) {
 

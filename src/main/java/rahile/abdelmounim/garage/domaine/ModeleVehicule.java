@@ -1,7 +1,6 @@
 package rahile.abdelmounim.garage.domaine;
 
-import rahile.abdelmounim.garage.commun.erreur.BusinessException;
-import rahile.abdelmounim.garage.commun.erreur.InvalidEnumException;
+import rahile.abdelmounim.garage.commun.erreur.InvalidationEnumException;
 
 public enum ModeleVehicule {
 
@@ -27,7 +26,7 @@ public enum ModeleVehicule {
             }
         }
 
-        throw new InvalidEnumException("MODELE_VEHICULE") {
+        throw new InvalidationEnumException("MODELE_VEHICULE") {
         };
     }
     

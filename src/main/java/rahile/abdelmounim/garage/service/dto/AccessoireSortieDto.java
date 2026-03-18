@@ -12,4 +12,5 @@ public record AccessoireSortieDto(
         String code,
         Long vehiculeId
 
-) {}
+) {
+}

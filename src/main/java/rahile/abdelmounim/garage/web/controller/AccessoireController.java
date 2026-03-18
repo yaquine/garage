@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-import rahile.abdelmounim.garage.commun.mappeur.AccessoireMapper;
+import rahile.abdelmounim.garage.commun.mappeur.AccessoireMappeur;
 import rahile.abdelmounim.garage.service.AccessoireService;
 import rahile.abdelmounim.garage.service.dto.AccessoireEntreDto;
 import rahile.abdelmounim.garage.service.dto.AccessoireSortieDto;
@@ -32,15 +32,15 @@ public class AccessoireController implements AccessoireApi {
             AccessoireRequete accessoireRequete
     ) {
 
-        LOGGER.info("debut ajouterAccessoire vehiculeId: {} accessoire: {}", vehiculeId, accessoireRequete);
+        LOGGER.info("Début ajouter accessoire véhicule Id: {} accessoire: {}", vehiculeId, accessoireRequete);
 
-        AccessoireEntreDto dto = AccessoireMapper.transformerEntreDto(accessoireRequete);
+        AccessoireEntreDto dto = AccessoireMappeur.transformerEntreDto(accessoireRequete);
 
         AccessoireSortieDto sortieDto = accessoireService.ajouterAccessoire(vehiculeId, dto);
 
-        AccessoireReponse response = AccessoireMapper.transformerReponse(sortieDto);
+        AccessoireReponse response = AccessoireMappeur.transformerReponse(sortieDto);
 
-        LOGGER.info("fin ajouterAccessoire id: {}", response.id());
+        LOGGER.info("Fin ajouter accessoire véhicule Id:: {}", response.id());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -48,44 +48,44 @@ public class AccessoireController implements AccessoireApi {
     @Override
     public ResponseEntity<AccessoireReponse> modifierAccessoire(Long accessoireId, AccessoireRequete accessoireRequete) {
 
-        LOGGER.info("debut modifier Accessoire id: {}", accessoireId);
+        LOGGER.info("Debut modifier Accessoire id: {}", accessoireId);
 
-        AccessoireEntreDto dto = AccessoireMapper.transformerEntreDto(accessoireRequete);
+        AccessoireEntreDto dto = AccessoireMappeur.transformerEntreDto(accessoireRequete);
 
         AccessoireSortieDto sortieDto = accessoireService.modifierAccessoire(accessoireId, dto);
 
-        AccessoireReponse response = AccessoireMapper.transformerReponse(sortieDto);
+        AccessoireReponse response = AccessoireMappeur.transformerReponse(sortieDto);
 
-        LOGGER.info("fin modifier Accessoire id: {}", accessoireId);
+        LOGGER.info("Fin modifier Accessoire id: {}", accessoireId);
 
         return ResponseEntity.ok(response);
     }
 
     @Override
-    public ResponseEntity<Void> supprimerAccessoire(Long accessoireId) {
+    public ResponseEntity<Void> desactiverAccessoire(Long accessoireId) {
 
-        LOGGER.info("debut supprimer Accessoire id: {}", accessoireId);
+        LOGGER.info("Debut desactiver Accessoire par id: {}", accessoireId);
 
-        accessoireService.supprimerAccessoire(accessoireId);
+        accessoireService.desactiverAccessoire(accessoireId);
 
-        LOGGER.info("fin supprimer Accessoire id: {}", accessoireId);
+        LOGGER.info("Fin desactiver Accessoire par id: {}", accessoireId);
 
         return ResponseEntity.noContent().build();
     }
 
     @Override
-    public ResponseEntity<List<AccessoireReponse>> listerAccessoiresVehicule(Long vehiculeId) {
+    public ResponseEntity<List<AccessoireReponse>> listerAccessoireVehicule(Long vehiculeId) {
 
-        LOGGER.info("debut lister Accessoires Vehicule vehiculeId: {}", vehiculeId);
+        LOGGER.info("Debut lister Accessoires Vehicule par Id: {}", vehiculeId);
 
         List<AccessoireSortieDto> dtos = accessoireService.listerAccessoiresVehicule(vehiculeId);
 
         List<AccessoireReponse> responses =
                 dtos.stream()
-                        .map(AccessoireMapper::transformerReponse)
+                        .map(AccessoireMappeur::transformerReponse)
                         .toList();
 
-        LOGGER.info("fin lister Accessoires Vehicule vehiculeId: {}", vehiculeId);
+        LOGGER.info("Fin lister Accessoires Vehicule par Id: {}", vehiculeId);
 
         return ResponseEntity.ok(responses);
     }

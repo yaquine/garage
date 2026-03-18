@@ -3,7 +3,6 @@ package rahile.abdelmounim.garage.domaine;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
-import rahile.abdelmounim.garage.commun.erreur.VehiculeCapacitieSurpasseException;
 
 import java.time.Year;
 import java.util.HashSet;
@@ -13,7 +12,7 @@ import java.util.Set;
 @Entity
 @Table(name = "vehicule")
 @SQLDelete(sql = "UPDATE vehicule SET etat = 'INACTIVE' WHERE id = ?")
-public class Vehicule extends EntiteAuditAbstraite{
+public class Vehicule extends EntiteAuditeAbstraite {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -104,7 +103,7 @@ public class Vehicule extends EntiteAuditAbstraite{
         accessoires.add(accessoire);
     }
 
-    public void supprimerAccessoire(Accessoire accessoire) {
+    public void desactiverAccessoire(Accessoire accessoire) {
         accessoires.remove(accessoire);
         accessoire.setVehicule(null);
     }

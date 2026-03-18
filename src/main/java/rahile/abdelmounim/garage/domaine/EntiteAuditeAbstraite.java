@@ -12,7 +12,7 @@ import java.time.OffsetDateTime;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class EntiteAuditAbstraite implements Serializable {
+public abstract class EntiteAuditeAbstraite implements Serializable {
 
     @CreatedDate
     @Column(name = "date_creation", updatable = false)
@@ -34,7 +34,7 @@ public abstract class EntiteAuditAbstraite implements Serializable {
     @Enumerated(EnumType.STRING)
     protected EtatEntiteEnum etat = EtatEntiteEnum.ACTIVE;
 
-    protected EntiteAuditAbstraite() {
+    protected EntiteAuditeAbstraite() {
         this.dateCreation = OffsetDateTime.now();
         this.dateModification = OffsetDateTime.now();
         this.etat = EtatEntiteEnum.ACTIVE;

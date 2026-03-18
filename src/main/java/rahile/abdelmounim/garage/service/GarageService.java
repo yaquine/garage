@@ -4,7 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import rahile.abdelmounim.garage.service.dto.GarageEntreDto;
 import rahile.abdelmounim.garage.service.dto.GarageSortieDto;
-import rahile.abdelmounim.garage.web.requete.GarageReadRequete;
+import rahile.abdelmounim.garage.web.requete.GarageLectureRequete;
 
 public interface GarageService {
 
@@ -12,12 +12,12 @@ public interface GarageService {
 
     GarageSortieDto modifierGarage(Long id, GarageEntreDto garageEntreDto);
 
-    void supprimerGarage(Long id);
+    void desactiverGarage(Long id);
 
     GarageSortieDto trouverGarageParId(Long id);
 
     Page<GarageSortieDto> chercherGarages(
-            GarageReadRequete garageReadRequete,
+            GarageLectureRequete garageLectureRequete,
             Pageable pageable
     );
 }

@@ -10,4 +10,5 @@ public record VehiculeSortieDto(
         String matricule,
         Long garageId
 
-) {}
+) {
+}

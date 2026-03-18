@@ -3,13 +3,12 @@ package rahile.abdelmounim.garage.web.api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rahile.abdelmounim.garage.web.reponse.GarageReponse;
 import rahile.abdelmounim.garage.web.reponse.PageResponse;
-import rahile.abdelmounim.garage.web.requete.GarageReadRequete;
+import rahile.abdelmounim.garage.web.requete.GarageLectureRequete;
 import rahile.abdelmounim.garage.web.requete.GarageRequete;
 
 @Tag(name = "Garage", description = "EndPoints pour gestions des garages")
@@ -32,8 +31,8 @@ public interface GarageApi {
 
     @Operation(summary = "Supprimer garage")
     @ApiResponse(responseCode = "204", description = "Garage supprime avec succes")
-    @PutMapping("/{id}/disactiver")
-    ResponseEntity<Void> supprimerGarage(
+    @PutMapping("/{id}/desactiver")
+    ResponseEntity<Void> desactiverGarage(
             @PathVariable Long id
     );
 
@@ -46,8 +45,8 @@ public interface GarageApi {
 
     @PostMapping("/chercher")
     @Operation(summary = "Rechercher garages avec pagination")
-    ResponseEntity<PageResponse<GarageReponse>> chercherGarages(
-            @RequestBody GarageReadRequete garageReadRequete,
+    ResponseEntity<PageResponse<GarageReponse>> chercherGarage(
+            @RequestBody GarageLectureRequete garageLectureRequete,
             Pageable pageable
     );
 }

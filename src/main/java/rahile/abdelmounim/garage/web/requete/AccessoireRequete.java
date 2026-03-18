@@ -8,4 +8,5 @@ public record AccessoireRequete(
         BigDecimal prix,
         String type,
         String code
-) {}
+) {
+}

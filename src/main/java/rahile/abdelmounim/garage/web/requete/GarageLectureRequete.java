@@ -1,6 +1,6 @@
 package rahile.abdelmounim.garage.web.requete;
 
-public record GarageReadRequete(
+public record GarageLectureRequete(
         String nom,
         String addresse,
         String typeVehicule,

@@ -8,11 +8,10 @@ import org.hibernate.annotations.SQLDelete;
 import java.math.BigDecimal;
 
 
-
 @Entity
 @Table(name = "accessoire")
 @SQLDelete(sql = "UPDATE accessoire SET etat = 'INACTIVE' WHERE id = ?")
-public class Accessoire extends EntiteAuditAbstraite{
+public class Accessoire extends EntiteAuditeAbstraite {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

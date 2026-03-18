@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rahile.abdelmounim.garage.commun.erreur.AccessoireInexistantException;
 import rahile.abdelmounim.garage.commun.erreur.VehiculeInexistantException;
-import rahile.abdelmounim.garage.commun.mappeur.AccessoireMapper;
+import rahile.abdelmounim.garage.commun.mappeur.AccessoireMappeur;
 import rahile.abdelmounim.garage.domaine.Accessoire;
-import rahile.abdelmounim.garage.domaine.EntiteAuditAbstraite;
+import rahile.abdelmounim.garage.domaine.EntiteAuditeAbstraite;
 import rahile.abdelmounim.garage.domaine.Vehicule;
 import rahile.abdelmounim.garage.repository.AccessoireRepository;
 import rahile.abdelmounim.garage.repository.VehiculeRepository;
@@ -39,29 +39,29 @@ public class AccessoireServiceImpl implements AccessoireService {
     @Override
     public AccessoireSortieDto ajouterAccessoire(Long vehiculeId, AccessoireEntreDto dto) {
 
-        LOGGER.info("Service ajouterAccessoire vehiculeId: {}", vehiculeId);
+        LOGGER.info("Début service : ajouter accessoire, véhicule Id : {}", vehiculeId);
 
-        Vehicule vehicule = vehiculeRepository.findByIdAndEtat(vehiculeId, EntiteAuditAbstraite.EtatEntiteEnum.ACTIVE)
+        Vehicule vehicule = vehiculeRepository.findByIdAndEtat(vehiculeId, EntiteAuditeAbstraite.EtatEntiteEnum.ACTIVE)
                 .orElseThrow(() -> new VehiculeInexistantException(vehiculeId));
 
-        Accessoire accessoire = AccessoireMapper.transformerEntite(dto);
+        Accessoire accessoire = AccessoireMappeur.transformerEntite(dto);
 
         accessoire.setVehicule(vehicule);
 
         Accessoire saved = accessoireRepository.save(accessoire);
 
-        LOGGER.info("Accessoire ajouté id: {}", saved.getId());
+        LOGGER.info("Fin service : ajouter accessoire, accessoire Id: {}", saved.getId());
 
-        return AccessoireMapper.transformerSortieDto(saved);
+        return AccessoireMappeur.transformerSortieDto(saved);
     }
 
     @Override
     public AccessoireSortieDto modifierAccessoire(Long accessoireId, AccessoireEntreDto dto) {
 
-        LOGGER.info("Service modifierAccessoire id: {}", accessoireId);
+        LOGGER.info("Début service, modifier accessoire par id: {}", accessoireId);
 
         Accessoire accessoire = accessoireRepository.findByIdAndEtat(accessoireId,
-                        EntiteAuditAbstraite.EtatEntiteEnum.ACTIVE)
+                        EntiteAuditeAbstraite.EtatEntiteEnum.ACTIVE)
                 .orElseThrow(() -> new AccessoireInexistantException(accessoireId));
 
         accessoire.setNom(dto.nom());
@@ -72,39 +72,39 @@ public class AccessoireServiceImpl implements AccessoireService {
 
         Accessoire updated = accessoireRepository.save(accessoire);
 
-        LOGGER.info("Accessoire modifié id: {}", updated.getId());
+        LOGGER.info("Fin service, modifier accessoire par id: {}", updated.getId());
 
-        return AccessoireMapper.transformerSortieDto(updated);
+        return AccessoireMappeur.transformerSortieDto(updated);
     }
 
     @Override
-    public void supprimerAccessoire(Long accessoireId) {
+    public void desactiverAccessoire(Long accessoireId) {
 
-        LOGGER.info("Service supprimerAccessoire id: {}", accessoireId);
+        LOGGER.info("Début service desactiver accessoire par id : {}", accessoireId);
 
         Accessoire accessoire = accessoireRepository.findByIdAndEtat(accessoireId,
-                        EntiteAuditAbstraite.EtatEntiteEnum.ACTIVE)
+                        EntiteAuditeAbstraite.EtatEntiteEnum.ACTIVE)
                 .orElseThrow(() -> new AccessoireInexistantException(accessoireId));
 
         Vehicule vehicule = accessoire.getVehicule();
 
-        vehicule.supprimerAccessoire(accessoire);
+        vehicule.desactiverAccessoire(accessoire);
 
         vehiculeRepository.save(vehicule);
 
-        LOGGER.info("Accessoire supprimé id: {}", accessoireId);
+        LOGGER.info("Fin service desactiver accessoire par id : {}", accessoireId);
     }
 
     @Override
     public List<AccessoireSortieDto> listerAccessoiresVehicule(Long vehiculeId) {
 
-        LOGGER.info("Service listerAccessoiresVehicule vehiculeId: {}", vehiculeId);
+        LOGGER.info("Début du service : lister les accessoires du véhicule par véhicule. Id : {}", vehiculeId);
 
         List<Accessoire> accessoires =
-                accessoireRepository.findByVehiculeIdAndEtat(vehiculeId, EntiteAuditAbstraite.EtatEntiteEnum.ACTIVE);
+                accessoireRepository.findByVehiculeIdAndEtat(vehiculeId, EntiteAuditeAbstraite.EtatEntiteEnum.ACTIVE);
 
         return accessoires.stream()
-                .map(AccessoireMapper::transformerSortieDto)
+                .map(AccessoireMappeur::transformerSortieDto)
                 .toList();
     }
 }

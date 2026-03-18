@@ -12,7 +12,7 @@ public interface VehiculeService {
 
     VehiculeSortieDto modifierVehicule(Long vehiculeId, VehiculeEntreDto dto);
 
-    void supprimerVehicule(Long vehiculeId);
+    void desactiverVehicule(Long vehiculeId);
 
     List<VehiculeSortieDto> listerVehiculesGarage(Long garageId);
 

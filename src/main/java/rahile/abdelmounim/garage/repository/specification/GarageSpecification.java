@@ -4,20 +4,21 @@ package rahile.abdelmounim.garage.repository.specification;
 import jakarta.annotation.Nullable;
 import org.springframework.data.jpa.domain.Specification;
 import rahile.abdelmounim.garage.domaine.Accessoire;
-import rahile.abdelmounim.garage.domaine.EntiteAuditAbstraite;
+import rahile.abdelmounim.garage.domaine.EntiteAuditeAbstraite;
 import rahile.abdelmounim.garage.domaine.Garage;
 import rahile.abdelmounim.garage.domaine.Vehicule;
-import rahile.abdelmounim.garage.web.requete.GarageReadRequete;
+import rahile.abdelmounim.garage.web.requete.GarageLectureRequete;
 import jakarta.persistence.criteria.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class GarageSpecification implements Specification<Garage> {
 
-    private final transient GarageReadRequete garageReadRequete;
+    private final transient GarageLectureRequete garageLectureRequete;
 
-    public GarageSpecification(GarageReadRequete garageReadRequete) {
-        this.garageReadRequete = garageReadRequete;
+    public GarageSpecification(GarageLectureRequete garageLectureRequete) {
+        this.garageLectureRequete = garageLectureRequete;
     }
 
     @Override
@@ -25,41 +26,41 @@ public class GarageSpecification implements Specification<Garage> {
 
         List<Predicate> predicates = new ArrayList<>();
 
-        if (garageReadRequete.nom() != null && !garageReadRequete.nom().isBlank()) {
+        if (garageLectureRequete.nom() != null && !garageLectureRequete.nom().isBlank()) {
 
             predicates.add(
                     cb.like(
                             cb.lower(root.get("nom")),
-                            "%" + garageReadRequete.nom().trim().toLowerCase() + "%"
+                            "%" + garageLectureRequete.nom().trim().toLowerCase() + "%"
                     )
             );
         }
 
-        if (garageReadRequete.addresse() != null && !garageReadRequete.addresse().isBlank()) {
+        if (garageLectureRequete.addresse() != null && !garageLectureRequete.addresse().isBlank()) {
 
             predicates.add(
                     cb.like(
                             cb.lower(root.get("addresse")),
-                            "%" + garageReadRequete.addresse().trim().toLowerCase() + "%"
+                            "%" + garageLectureRequete.addresse().trim().toLowerCase() + "%"
                     )
             );
         }
 
         Join<Garage, Vehicule> vehiculeJoin = null;
 
-        if (garageReadRequete.typeVehicule() != null) {
+        if (garageLectureRequete.typeVehicule() != null) {
 
             vehiculeJoin = root.join("vehicules", JoinType.INNER);
 
             predicates.add(
                     cb.equal(
                             vehiculeJoin.get("modele"),
-                            garageReadRequete.typeVehicule().toUpperCase()
+                            garageLectureRequete.typeVehicule().toUpperCase()
                     )
             );
         }
 
-        if (garageReadRequete.typeAccessoire() != null) {
+        if (garageLectureRequete.typeAccessoire() != null) {
 
             if (vehiculeJoin == null) {
 
@@ -73,7 +74,7 @@ public class GarageSpecification implements Specification<Garage> {
             predicates.add(
                     cb.equal(
                             cb.upper(accessoireJoin.get("type")),
-                            garageReadRequete.typeAccessoire().toUpperCase()
+                            garageLectureRequete.typeAccessoire().toUpperCase()
                     )
             );
         }
@@ -82,7 +83,7 @@ public class GarageSpecification implements Specification<Garage> {
         predicates.add(
                 cb.equal(
                         root.get("etat"),
-                        EntiteAuditAbstraite.EtatEntiteEnum.ACTIVE.getValue()
+                        EntiteAuditeAbstraite.EtatEntiteEnum.ACTIVE.getValue()
                 )
         );
 

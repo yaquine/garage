@@ -7,4 +7,5 @@ public record VehiculeRequete(
         String typeCarburant,
         String matricule
 
-) {}
+) {
+}

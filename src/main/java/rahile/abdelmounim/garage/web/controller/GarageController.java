@@ -8,14 +8,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-import rahile.abdelmounim.garage.commun.mappeur.GarageMapper;
+import rahile.abdelmounim.garage.commun.mappeur.GarageMappeur;
 import rahile.abdelmounim.garage.service.GarageService;
 import rahile.abdelmounim.garage.service.dto.GarageEntreDto;
 import rahile.abdelmounim.garage.service.dto.GarageSortieDto;
 import rahile.abdelmounim.garage.web.api.GarageApi;
 import rahile.abdelmounim.garage.web.reponse.GarageReponse;
 import rahile.abdelmounim.garage.web.reponse.PageResponse;
-import rahile.abdelmounim.garage.web.requete.GarageReadRequete;
+import rahile.abdelmounim.garage.web.requete.GarageLectureRequete;
 import rahile.abdelmounim.garage.web.requete.GarageRequete;
 
 @RestController
@@ -26,7 +26,6 @@ public class GarageController implements GarageApi {
     private final GarageService garageService;
 
 
-
     public GarageController(GarageService garageService) {
         this.garageService = garageService;
     }
@@ -34,39 +33,39 @@ public class GarageController implements GarageApi {
     @Override
     public ResponseEntity<GarageReponse> ajouterGarage(GarageRequete garageRequete) {
 
-        LOGGER.info(" debut ajouter Garage: {}", garageRequete);
+        LOGGER.info(" Début ajouter Garage : {}", garageRequete);
 
-        GarageEntreDto garageEntreDto = GarageMapper.transformerDto(garageRequete);
+        GarageEntreDto garageEntreDto = GarageMappeur.transformerDto(garageRequete);
 
-        GarageSortieDto garageSortieDto  = garageService.ajouterGarage(garageEntreDto);
+        GarageSortieDto garageSortieDto = garageService.ajouterGarage(garageEntreDto);
 
-        LOGGER.info(" fin ajouter Garage: {}", garageSortieDto);
+        LOGGER.info(" Fin ajouter Garage: {}", garageSortieDto);
 
-        return new ResponseEntity<>(GarageMapper.transformerReponse(garageSortieDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(GarageMappeur.transformerReponse(garageSortieDto), HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<GarageReponse> modifierGarage(Long id, GarageRequete garageRequete) {
 
-        LOGGER.info(" debut modifierGarage: {}", garageRequete);
+        LOGGER.info(" Début modifier Garage: {}", garageRequete);
 
-        GarageEntreDto garageEntreDto = GarageMapper.transformerDto(garageRequete);
+        GarageEntreDto garageEntreDto = GarageMappeur.transformerDto(garageRequete);
 
-        GarageSortieDto garageSortieDto  = garageService.modifierGarage(id, garageEntreDto);
+        GarageSortieDto garageSortieDto = garageService.modifierGarage(id, garageEntreDto);
 
-        LOGGER.info(" fin modifierGarage: {}", garageRequete);
+        LOGGER.info(" Fin modifier Garage: {}", garageRequete);
 
-        return new ResponseEntity<>(GarageMapper.transformerReponse(garageSortieDto), HttpStatus.OK);
+        return new ResponseEntity<>(GarageMappeur.transformerReponse(garageSortieDto), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Void> supprimerGarage(Long id) {
+    public ResponseEntity<Void> desactiverGarage(Long id) {
 
-        LOGGER.info(" debut supprimer Garage: {}", id);
+        LOGGER.info(" Début désactiver garage par id : {}", id);
 
-        garageService.supprimerGarage(id);
+        garageService.desactiverGarage(id);
 
-        LOGGER.info(" fin supprimer Garage: ");
+        LOGGER.info(" Fin désactiver garage par id : ");
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -75,26 +74,26 @@ public class GarageController implements GarageApi {
     @Override
     public ResponseEntity<GarageReponse> trouverGarageParId(Long id) {
 
-        LOGGER.info("debut findGarageById {}", id);
+        LOGGER.info("Début trouver garage par id :{}", id);
 
         GarageSortieDto dto = garageService.trouverGarageParId(id);
 
-        LOGGER.info("fin findGarageById {}", id);
+        LOGGER.info("Fin trouver garage par id {}", id);
 
-        return ResponseEntity.ok(GarageMapper.transformerReponse(dto));
+        return ResponseEntity.ok(GarageMappeur.transformerReponse(dto));
     }
 
     @Override
-    public ResponseEntity<PageResponse<GarageReponse>> chercherGarages(GarageReadRequete garageReadRequete, Pageable pageable) {
+    public ResponseEntity<PageResponse<GarageReponse>> chercherGarage(GarageLectureRequete garageLectureRequete, Pageable pageable) {
 
-        LOGGER.info("debut chercher Garages {} ", garageReadRequete);
+        LOGGER.info("Début chercher Garages, requête: {} ", garageLectureRequete);
 
         Page<GarageReponse> page =
-                garageService.chercherGarages(garageReadRequete, pageable)
-                        .map(GarageMapper::transformerReponse);
+                garageService.chercherGarages(garageLectureRequete, pageable)
+                        .map(GarageMappeur::transformerReponse);
 
-        LOGGER.info("fin chercher Garages {} ", garageReadRequete);
+        LOGGER.info("Fin chercher Garages, requête: {} ", garageLectureRequete);
 
-        return ResponseEntity.ok(GarageMapper.transformerReponse(page));
+        return ResponseEntity.ok(GarageMappeur.transformerReponse(page));
     }
 }

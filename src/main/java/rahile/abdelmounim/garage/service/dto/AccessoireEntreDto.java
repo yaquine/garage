@@ -10,4 +10,5 @@ public record AccessoireEntreDto(
         String type,
         String code
 
-) {}
+) {
+}
