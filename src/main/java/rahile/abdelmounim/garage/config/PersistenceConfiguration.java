@@ -20,11 +20,11 @@ import java.util.Optional;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(value = {"rahile.abdelmounim.garage.repository"})
-@EnableJpaAuditing(auditorAwareRef = "auditorProvider", dateTimeProviderRef = "auditingDateTimeProvider")
+@EnableJpaAuditing(auditorAwareRef = "AuditeurAwareImpl", dateTimeProviderRef = "auditingDateTimeProvider")
 public class PersistenceConfiguration {
 
     @Bean
-    AuditorAware<String> auditeurProvideur() {
+    AuditorAware<String> AuditeurAwareImpl() {
         return new AuditeurAwareImpl();
     }
 
