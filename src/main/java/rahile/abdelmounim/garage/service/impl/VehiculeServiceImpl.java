@@ -14,6 +14,8 @@ import rahile.abdelmounim.garage.domaine.Garage;
 import rahile.abdelmounim.garage.domaine.ModeleVehicule;
 import rahile.abdelmounim.garage.domaine.Vehicule;
 import rahile.abdelmounim.garage.evenement.dto.VehiculeAjoutEvenement;
+import rahile.abdelmounim.garage.evenement.mappeur.VehiculeEvenementMappeur;
+import rahile.abdelmounim.garage.evenement.producteur.VehiculeEvenementProducteur;
 import rahile.abdelmounim.garage.repository.GarageRepository;
 import rahile.abdelmounim.garage.repository.VehiculeRepository;
 import rahile.abdelmounim.garage.service.VehiculeService;
@@ -31,12 +33,14 @@ public class VehiculeServiceImpl implements VehiculeService {
 
     private final VehiculeRepository vehiculeRepository;
     private final GarageRepository garageRepository;
-    private final ApplicationEventPublisher eventPublisheur;
+    private final ApplicationEventPublisher evenementPublisheur;
+    private final VehiculeEvenementProducteur vehiculeEvenementProducteur;
 
-    public VehiculeServiceImpl(VehiculeRepository vehiculeRepository, GarageRepository garageRepository, ApplicationEventPublisher eventPublisheur) {
+    public VehiculeServiceImpl(VehiculeRepository vehiculeRepository, GarageRepository garageRepository, ApplicationEventPublisher evenementPublisheur, VehiculeEvenementProducteur vehiculeEvenementProducteur) {
         this.vehiculeRepository = vehiculeRepository;
         this.garageRepository = garageRepository;
-        this.eventPublisheur = eventPublisheur;
+        this.evenementPublisheur = evenementPublisheur;
+        this.vehiculeEvenementProducteur = vehiculeEvenementProducteur;
     }
 
     @Override
@@ -53,7 +57,10 @@ public class VehiculeServiceImpl implements VehiculeService {
 
         vehicule = vehiculeRepository.save(vehicule);
 
-        eventPublisheur.publishEvent(new VehiculeAjoutEvenement(vehicule.getId(), garageId));
+        evenementPublisheur.publishEvent(new VehiculeAjoutEvenement(vehicule.getId(), garageId));
+
+        vehiculeEvenementProducteur.envoyerVehicule(VehiculeEvenementMappeur.mapperVehiculeEvenement(garageId,
+                vehicule.getId()) );
 
         LOGGER.info(" Fin ajouter véhicule : {} ", vehicule);
 
@@ -120,4 +127,6 @@ public class VehiculeServiceImpl implements VehiculeService {
                 .map(VehiculeMappeur::transformerDto)
                 .toList();
     }
+
+
 }

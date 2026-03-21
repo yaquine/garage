@@ -1,4 +1,4 @@
-package rahile.abdelmounim.garage.evenement.eventlistener;
+package rahile.abdelmounim.garage.evenement.consomateur.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,11 +7,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 import rahile.abdelmounim.garage.evenement.dto.VehiculeAjoutEvenement;
+import rahile.abdelmounim.garage.evenement.consomateur.VehiculeEvenementConsomeur;
 
 @Component
-public class VehiculeEvenementConsomeur {
+public class VehiculeEvenementConsomeurImpl implements VehiculeEvenementConsomeur {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(VehiculeEvenementConsomeur.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(VehiculeEvenementConsomeurImpl.class);
 
     @Async
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)

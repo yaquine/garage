@@ -26,3 +26,25 @@ spring:
     show-sql: true
 
 
+  kafka:
+    bootstrap-servers:
+      - localhost:9093
+    consumer:
+      group-id: rahile.abdelmounim.garage
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer:  org.springframework.kafka.support.serializer.JsonDeserializer
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      max-poll-records: 10000
+      properties:
+        spring:
+          json:
+            trusted.packages: rahile.abdelmounim.garage.evenement.dto
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+kafka:
+  topics:
+    main: rahile.abdelmounim.garage.EVT_GARAGE_MAIN
+
