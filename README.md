@@ -11,6 +11,10 @@ Les Accessoires des véhicules
 Elle est développée avec Spring Boot et documentée avec Swagger / OpenAPI afin de faciliter les tests et l'exploration 
 des endpoints.
 
+📚 Démarrage Application
+
+Démarrer svp l'application au profile dev, pour activer kafka
+
 📚 Documentation de l'API
 
 La documentation interactive de l'API est disponible via Swagger UI :

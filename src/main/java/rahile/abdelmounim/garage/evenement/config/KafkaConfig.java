@@ -3,9 +3,11 @@ package rahile.abdelmounim.garage.evenement.config;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.kafka.autoconfigure.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.*;
@@ -17,12 +19,14 @@ import java.util.Map;
 
 @Configuration
 @EnableKafka
+@Profile("dev")
 public class KafkaConfig {
 
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaConfig.class);
     private final KafkaProperties kafkaProperties;
-    private final String VEHICULE_TOPIC_PRINCIPAL = "rahile.abdelmounim.garage.EVT_GARAGE_MAIN";
+    @Value("${kafka.topics.main}")
+    private String topicPrincipal;
 
 
     public KafkaConfig(KafkaProperties kafkaProperties) {
@@ -57,7 +61,7 @@ public class KafkaConfig {
     @Bean
     public NewTopic vehiculeTopic() {
         return new NewTopic(
-                VEHICULE_TOPIC_PRINCIPAL, 3, (short) 1
+                topicPrincipal, 3, (short) 1
         );
     }
 
